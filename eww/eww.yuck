@@ -1,0 +1,18 @@
+; (include "./modules-left.yuck")
+; (include "./modules-right.yuck")
+; (include "./workspaces.yuck")
+(include "./volume.yuck")
+
+(defwindow volume
+    :monitor 0
+    :geometry (
+        geometry 
+        :x "0"
+        :y "20%"
+        :anchor "top right"
+    )
+    :stacking "fg"
+    :exclusive "false"
+    :focusable "false"
+    (volume_metric)
+)

@@ -1,0 +1,242 @@
+@import './themes/Murasa/colors.css';
+
+/* GENERIC */
+
+* {
+    all: unset;
+    background-clip: padding-box;
+    color: @bg-color;
+    font-family: MesloLGS Nerd Font;
+    font-size: 14px;
+    text-shadow: 2px 2px 2px rgba(6, 24, 64, 0.3);
+    /* border: 1px solid red; */
+}
+
+window#waybar {
+    background: linear-gradient(rgba(2, 0, 36, 1), rgba(0, 0, 0, 0) 90%);
+}
+
+tooltip {
+    background-color: alpha(@border-color, 0.8);
+    border: 2px solid alpha(@bg-color, 0.6);
+    border-radius: 20px;
+}
+
+tooltip label {
+    margin: 10px 0;
+    padding: 0 5px;
+    color: @bg-color;
+}
+
+/* WORKSPACES */
+
+#workspaces {
+    margin: 6px 10px;
+    padding: 7px 2px;
+    border-radius: 30px;
+    background-color: alpha(@border-color, 0.5);
+    box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
+    font-weight: bold;
+}
+
+#workspaces button {
+    min-width: 40px;
+    margin: 0px 5px;
+    padding: 2px 15px;
+    border-radius: 30px;
+    opacity: 0.4;
+    background-color: @bg-color;
+    background-clip: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button label {
+    font-size: 16px;
+    color: @border-color;
+}
+
+#workspaces button.active {
+    opacity: 0.8;
+    min-width: 120px;
+}
+
+#workspaces button.urgent {
+    background-color: @accent-color;
+    animation: blink 0.5s infinite alternate;
+    animation-timing-function: steps(12);
+}
+
+#workspaces button.urgent label {
+    animation: blink_label 0.5s infinite alternate;
+    animation-timing-function: steps(12);
+}
+
+#workspaces button:hover {
+    opacity: 1;
+}
+
+.modules-left {
+    padding: 0 15px;
+    margin: 7px 0;
+    background-color: alpha(@border-color, 0.5);
+    box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
+    border-radius: 30px;
+    min-width: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+.modules-left {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.modules-right {
+    margin-right: 10px;
+    /* padding: 0 10px; */
+}
+
+.modules-left *,
+.modules-right * {
+    padding: 0 5px;
+    border-radius: 30px;
+}
+
+/* LEFT MODULES */
+
+#hardware {
+    margin: 5px 0;
+}
+
+#hardware * {
+    margin: 0 5px;
+}
+
+#hardware label {
+    color: @bg-color;
+}
+
+/* RIGHT MODULES */
+
+#clock {
+    font-weight: bold;
+    font-size: 16;
+    padding: 0 15px;
+    margin: 7px 10px;
+    background-color: alpha(@border-color, 0.5);
+    box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
+    border-radius: 30px;
+    min-width: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+#data {
+    padding: 0 15px;
+    margin: 7px 0;
+    background-color: alpha(@border-color, 0.5);
+    box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
+    border-radius: 30px;
+    min-width: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+#data * {
+    min-width: 14px;
+}
+
+#language {
+    min-width: 20px;
+    font-weight: bold;
+    margin: 5px 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+#language:hover {
+    box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
+}
+
+/* #idle_inhibitor {} */
+
+#pulseaudio {
+    padding-right: 12px;
+}
+
+#network {
+    min-width: 14px;
+    margin: 7px 0px;
+    padding-right: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+#bluetooth {
+    min-width: 14px;
+    margin: 7px 0px;
+    transition: all 0.3s ease-in-out;
+}
+
+#bluetooth.on {
+    /* box-shadow: 0px 0 4px alpha(@bg-color, 0.6); */
+    background-color: alpha(@bg-color, 0.6);
+    color: @border-color;
+}
+
+#battery {
+    margin: 7px 4px;
+    background-color: transparent;
+}
+
+/* #battery.charging {
+    box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
+} */
+
+#battery.warning:not(.charging) {
+    animation: blink_bright 1s infinite alternate-reverse;
+    animation-timing-function: steps(24);
+}
+
+#battery.critical:not(.charging) {
+    animation: blink_danger 0.5s infinite alternate;
+    animation-timing-function: steps(12);
+}
+
+#tray {
+    margin: 5px 0;
+}
+
+#custom-power {
+    margin: 7px 0;
+    padding-right: 8px;
+}
+
+/* ANIMATIONS */
+
+@keyframes blink {
+    to {
+        background-color: @border-color;
+        opacity: 1;
+    }
+}
+
+@keyframes blink_bright {
+    to {
+        background-color: @bg-color;
+        color: @border-color;
+    }
+}
+
+@keyframes blink_label {
+    from {
+        color: @border-color;
+    }
+
+    to {
+        color: @bg-color;
+    }
+}
+
+@keyframes blink_danger {
+    to {
+        background-color: red;
+        color: @bg-color;
+        opacity: 1;
+    }
+}

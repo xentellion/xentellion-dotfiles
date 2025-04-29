@@ -1,0 +1,34 @@
+(
+    deflisten placeholder
+    :initial "Girls are now preparing..."
+    "sh scripts/quotes"
+)
+(
+    deflisten window 
+    :initial "What a night"
+    "sh scripts/window_title"
+)
+
+
+(
+    defwidget modules-left []
+    (
+        box
+        :orientation "h"
+        :class "modules-left"
+        :halign "start"
+        
+        (window_w)
+    )
+)
+
+(
+    defwidget window_w []
+    (
+        box
+        (
+            label 
+            :text "${window != "" ? window : placeholder}"
+        )
+    )
+)

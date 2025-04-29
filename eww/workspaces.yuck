@@ -1,0 +1,44 @@
+(
+    deflisten workspaces 
+    :initial "[]" 
+    "sh ./scripts/get-workspaces"
+)
+(
+    deflisten current_workspace 
+    :initial "1" 
+    "sh ./scripts/get-active-workspaces"
+)
+; (
+;     deflisten urgent_workspace 
+;     :initial "..." 
+;     "sh ./scripts/get-urgent-workspaces"
+; )
+
+(defwidget workspaces []
+    (
+        eventbox 
+        :onscroll "bash scripts/change-active-workspace.sh {} ${current_workspace}" 
+        :class "workspaces-widget"
+        (
+            box 
+            :class "workspaces" 
+            :orientation "h"
+            :space-evenly "false"
+            :halign "center"
+
+            (for workspace in workspaces
+                (
+                    button
+                    :onclick "hyprctl dispatch workspace ${workspace.id}"                   
+                    :class "workspaces-entry ${workspace.id == current_workspace ? "current" : "" }" ;${workspace.id == urgent_workspace ? "urgent" : ""}"
+                    (
+                        label
+                        :unindent "false"
+                        ; :justify "center"
+                        :text " ${workspace.windows > 0 || workspace.id == current_workspace ? workspace.id: "" } "
+                    )
+                )
+            )
+        )
+    )
+)

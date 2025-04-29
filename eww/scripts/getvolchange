@@ -1,0 +1,16 @@
+# #!/bin/sh
+
+# while true; # ass
+# do
+#     coproc named_coproc { exec pactl subscribe | grep --line-buffered "sink "; }
+#     if grep -q "event" <&${named_coproc[0]}
+#     then
+#         kill $named_coproc_PID
+#         echo true
+#         sleep 8s
+#         echo false
+#     fi
+# done
+
+sleep 2s
+echo true

@@ -1,0 +1,11 @@
+show=drun
+height=500
+always_parse_args=true
+show_all=false
+term=kitty
+hide_scroll=true
+print_command=true
+insensitive=true
+prompt=You know what you have to do
+columns=3
+filter_rate=60

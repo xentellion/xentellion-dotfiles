@@ -1,0 +1,57 @@
+$border-color: #061840;
+$bg-color: white;
+$accent-color: rgba(217, 55, 42, 0.8);
+
+* {
+    all: unset;
+    font-weight: bold;
+}
+
+.volume {
+    margin-bottom: 400px;
+    margin-right: 20px;
+}
+
+.volume-icon {
+    margin-top: -300px;
+    padding-left: 14px;
+}
+
+.metric {
+    min-width: 30px;
+    min-height: 150px;
+
+    margin: 5px;
+    margin-right: 10px;
+
+    border: 2px solid $bg-color;
+    border-radius: 30px;
+
+    box-shadow: 0px 0 3px rgba($bg-color, 0.8);
+    background-clip: padding-box;
+    background-color: rgba($border-color, 0.8);
+
+    transition: all 0.3s ease-in-out;
+
+    trough {
+        min-height: 30px;
+        min-width: 30px;
+        border-radius: 50px;
+        transform: scale(1, -1);
+
+        highlight {
+            min-height: 10px;
+            margin: 5px;
+            border-radius: 15px 15px 0 0;
+            background-color: rgba($bg-color, 0.8);
+        }
+
+        slider {
+            min-height: 10px;
+            margin: 5px;
+            border-radius: 0 0 15px 15px;
+            background-color: rgba($bg-color, 0.8);
+            min-height: 150px;
+        }
+    }
+}
