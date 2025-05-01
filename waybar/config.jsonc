@@ -52,6 +52,7 @@
         "rewrite": {
             "": "Girls are now preparing..."
         },
+        "on-click" : "sh scripts/quote.sh",
         "max-length": 50,
         "icon": true
     },
@@ -77,8 +78,8 @@
             "cpu",
             "memory",
             "temperature",
-            "custom/separator",
-            "power-profiles-daemon"
+            "custom/separator"
+            // "power-profiles-daemon"
         ]
     },
     "group/data" : {
@@ -162,21 +163,6 @@
             ""
         ]
     },
-    "backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        ]
-    },
     "battery": {
         "states": {
             // "good": 95,
@@ -228,16 +214,15 @@
         // "scroll-step": 1, // %, can be a float
         // "format": "{volume}% {icon} {format_source}",
         "format": "{icon}  {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-bluetooth": "{icon}  {format_source}",
+        "format-bluetooth-muted": "󰟎  {format_source}",
         "format-muted": " {format_source}",
         "format-source": "",
-        // "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
-            "headset": "",
+            "headset": "󰋋",
             "phone": "",
             "portable": "",
             "car": "",
@@ -246,8 +231,8 @@
                 "",
                 ""
             ]
-        },
-        "on-click": "pavucontrol"
+        }
+        // "on-click": "pavucontrol"
         // "on-click": "eww open topbar"
     },
     "bluetooth": {
@@ -270,13 +255,13 @@
     {
         "format" : "",
         "tooltip": false
-    },
-    "custom/quote":
-    {
-        "exec" : "sh ~/.config/waybar/scripts/quote.sh",
-        "exec-if": "sh ~/.config/waybar/scripts/quote_check.sh",
-        // "exec-on-event" : true,
-        "interval": 1,
-        "format" : {}
     }
+    // "custom/quote":
+    // {
+    //     "exec" : "sh ~/.config/waybar/scripts/quote.sh",
+    //     "exec-if": "sh ~/.config/waybar/scripts/quote_check.sh",
+    //     // "exec-on-event" : true,
+    //     "interval": 1,
+    //     "format" : {}
+    // }
 }

@@ -39,9 +39,10 @@ QUOTES=(
 )
 
 RANDOM=$$$(date +%s)
+echo ${QUOTES[ $RANDOM % ${#QUOTES[@]} ]}
 
-socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
-    if [ `echo $line | awk -F '>>' '{print $1}'` == "workspace" ]; then
-        echo ${QUOTES[ $RANDOM % ${#QUOTES[@]} ]}
-    fi
-done
+# socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
+#     if [ `echo $line | awk -F '>>' '{print $1}'` == "workspace" ]; then
+#         echo ${QUOTES[ $RANDOM % ${#QUOTES[@]} ]}
+#     fi
+# done

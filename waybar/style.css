@@ -1,4 +1,6 @@
-@import './themes/Murasa/colors.css';
+@define-color border-color rgba(6, 24, 64, 1);
+@define-color bg-color rgba(255, 255, 255, 1);
+@define-color accent-color rgba(217, 55, 42, 0.8);
 
 /* GENERIC */
 
@@ -150,9 +152,9 @@ tooltip label {
     transition: all 0.3s ease-in-out;
 }
 
-#language:hover {
+/* #language:hover {
     box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
-}
+} */
 
 /* #idle_inhibitor {} */
 
@@ -173,8 +175,8 @@ tooltip label {
     transition: all 0.3s ease-in-out;
 }
 
-#bluetooth.on {
-    /* box-shadow: 0px 0 4px alpha(@bg-color, 0.6); */
+#bluetooth.on,
+#bluetooth.connected {
     background-color: alpha(@bg-color, 0.6);
     color: @border-color;
 }
@@ -183,10 +185,6 @@ tooltip label {
     margin: 7px 4px;
     background-color: transparent;
 }
-
-/* #battery.charging {
-    box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
-} */
 
 #battery.warning:not(.charging) {
     animation: blink_bright 1s infinite alternate-reverse;
