@@ -1,13 +1,11 @@
 import asyncio
 from ignis.widgets import Widget
 from ignis.services.backlight import BacklightService
+from ignis.utils import debounce
 
 
 class Backlight:
     def __init__(self):
-        self.timer = 0
-        self.active = False
-
         self.backlight = BacklightService.get_default()
 
         self.light_icon = self.get_light_icon()
@@ -32,9 +30,6 @@ class Backlight:
             step=1,
             value=self.backlight.bind("brightness"),
             css_classes=["metric"],
-            on_change=lambda x: asyncio.create_task(
-                self.backlight.set_brightness_async(x.value)
-            ),
         )
 
     def get_light_revealer(self):
@@ -60,15 +55,10 @@ class Backlight:
             child=self.light_revealer,
         )
 
-    async def start_light(self):
+    def start_light(self):
         self.light_revealer.reveal_child = True
-        self.active = True
-        self.timer = 1
+        self.end_light()
 
-    async def waiter(self):
-        while True:
-            await asyncio.sleep(1)
-            if self.timer > 0:
-                self.timer -= 1
-            else:
-                self.light_revealer.reveal_child = False
+    @debounce(1500)
+    def end_light(self):
+        self.light_revealer.reveal_child = False

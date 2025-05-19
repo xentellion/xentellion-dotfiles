@@ -35,7 +35,7 @@ QUOTES=(
     "I just don't think about losing."
     "All you did was add a cape..." 
     "Oh, an evil spirit? Wonderful!"
-    
+    "So true~"
 )
 
 RANDOM=$$$(date +%s)

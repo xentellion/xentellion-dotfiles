@@ -135,14 +135,14 @@
         "tooltip": false
     },
     "tray": {
-        "icon-size": 18,
+        "icon-size": 18
         // "spacing": 2
     },
     "clock": {
         "format": "{:%a %d %b %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         // "format-alt": "{:%d.%m.%Y}"
-        "interval": 1,
+        "interval": 1
     },
     "cpu": {
         "format": "{usage}% ",
@@ -199,7 +199,7 @@
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{essid}\n{signalStrength}%\n{ifname} via {gwaddr} \n{ipaddr}/{cidr}",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "󰤮",
+        "format-disconnected": "󰤮 ",
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "kitty nmtui connect",
         "format-icons" : [
@@ -239,7 +239,7 @@
         "format": "",
         "format-connected": " {num_connections} connected",
         "on-click": "bash ~/.config/waybar/scripts/bluetooth.sh",
-        "on-click-right": "kitty bluetui",
+        "on-click-right": "blueman-manager",
         "tooltip": true,
         "tooltip-format": "Bluetooth\n\nLeft: Turn BT on/off\nRight: Open BT manager"
     },

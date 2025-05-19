@@ -1,13 +1,11 @@
 import asyncio
 from ignis.widgets import Widget
 from ignis.services.audio import AudioService
+from ignis.utils import debounce
 
 
 class Volume:
     def __init__(self):
-        self.timer = 0
-        self.active = False
-
         self.audio = AudioService.get_default()
 
         self.volume_icon = self.speaker_volume()
@@ -57,15 +55,10 @@ class Volume:
             child=self.volume_revealer,
         )
 
-    async def start_volume(self):
+    def start_volume(self):
         self.volume_revealer.reveal_child = True
-        self.active = True
-        self.timer = 1
+        self.end_volume()
 
-    async def waiter(self):
-        while True:
-            await asyncio.sleep(1)
-            if self.timer > 0:
-                self.timer -= 1
-            else:
-                self.volume_revealer.reveal_child = False
+    @debounce(1500)
+    def end_volume(self):
+        self.volume_revealer.reveal_child = False
