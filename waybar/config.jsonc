@@ -244,8 +244,8 @@
         "tooltip-format": "Bluetooth\n\nLeft: Turn BT on/off\nRight: Open BT manager"
     },
     "custom/power": {
-        "format": "⏻",
-        "on-click": "",
+        "format": "󰒓",
+        "on-click": "ignis toggle revealer-controller",
         "on-click-right": "shutdown now",
         "on-click-middle": "reboot",
         "tooltip": true,
