@@ -4,6 +4,7 @@ from ignis.services.audio import AudioService
 from ignis.services.backlight import BacklightService
 from ignis.services.upower import UPowerService
 from ignis.services.network import NetworkService
+from ignis.services.mpris import MprisService
 
 
 bash_commands = {
@@ -33,9 +34,8 @@ bash_commands = {
 }
 
 
-class Controller:
+class Controller(Widget.RevealerWindow):
     def __init__(self):
-        self.is_active = True
         # Контрлирующие переменные
         self.airplane = (
             Utils.exec_sh(bash_commands["airplane_mode"][0]).stdout.strip() == "enabled"
@@ -47,7 +47,7 @@ class Controller:
         )
         # Обновление по расписанию
         self.update_check = Utils.Poll(
-            timeout=1 * 60 * 1000,
+            timeout=10 * 60 * 1000,
             callback=lambda x: Utils.exec_sh(bash_commands["update"][0]),
         )
 
@@ -56,6 +56,12 @@ class Controller:
         self.backlight = BacklightService.get_default()
         self.power = UPowerService.get_default()
         self.network = NetworkService.get_default()
+        self.mpris = MprisService.get_default()
+
+        self.mpris.connect(
+            "player_added", lambda x, player: self.player_control(player)
+        )
+
         # Блоки
         self.battery_widget = self.create_battery_box()
         self.volume_widget = self.create_volume_box()
@@ -63,6 +69,113 @@ class Controller:
         self.wifi_bluetooth_widget = self.create_wifi_bluetooth_box()
         self.update_reveal_widget = self.create_update_box()
         self.vpn_airplane_widget = self.create_vpn_airplane_box()
+
+        self.player_button = Widget.Button(
+            child=Widget.Label(label="󰏤"),
+            css_classes=["battery", "bluetooth"],
+        )
+
+        self.player_box = Widget.Box(
+            child=[
+                Widget.Label(
+                    label=(
+                        "Some_text"
+                        if len(self.mpris.players) == 0
+                        else self.mpris.players[0].art_url
+                    ),
+                    # label=self.player.art_url,
+                    style="color: white;",
+                ),
+                Widget.Button(
+                    child=Widget.Label(
+                        label="󱥠",
+                        style=f"color: #061840{"80" if self.dpi else "FF"};",
+                    ),
+                    css_classes=["battery", "bluetooth"],
+                    hexpand=True,
+                ),
+                Widget.Box(
+                    child=[
+                        Widget.Scale(
+                            vertical=False,
+                            min=0,
+                            max=100,
+                            step=1,
+                            # value=self.audio.speaker.bind("volume"),
+                            # on_change=lambda x: self.audio.speaker.set_volume(x.value),
+                            css_classes=["control-metric"],
+                            hexpand=True,
+                        ),
+                        Widget.Label(
+                            label="00:00",
+                            style="color: white;",
+                        ),
+                    ]
+                ),
+                Widget.Box(
+                    child=[
+                        Widget.Button(
+                            child=Widget.Label(label="󰑟"),
+                            css_classes=["battery", "bluetooth"],
+                        ),
+                        self.player_button,
+                        Widget.Button(
+                            child=Widget.Label(label="󰈑"),
+                            css_classes=["battery", "bluetooth"],
+                        ),
+                    ],
+                    halign="center",
+                    hexpand=True,
+                ),
+            ],
+            css_classes=["controller"],
+            vertical=True,
+            visible=False,
+        )
+
+        revealer = Widget.Revealer(
+            transition_type="slide_down",
+            child=Widget.Box(
+                child=[
+                    Widget.Box(
+                        child=[
+                            self.battery_widget,
+                            self.volume_widget,
+                            self.backligh_widget,
+                            self.wifi_bluetooth_widget,
+                            self.vpn_airplane_widget,
+                            self.update_reveal_widget,
+                        ],
+                        css_classes=["controller"],
+                        vertical=True,
+                    ),
+                    self.player_box,
+                ],
+                vertical=True,
+            ),
+            transition_duration=1000,
+            reveal_child=True,
+        )
+
+        super().__init__(
+            visible=False,
+            popup=True,
+            layer="top",
+            anchor=["top", "right"],
+            namespace="revealer-controller",
+            child=Widget.Box(child=[revealer]),
+            revealer=revealer,
+            style="min-height: 1000px;",
+        )
+
+    # --------------------------------------------------------------------
+
+    def close_on_select(func):
+        def inner(self):
+            func(self)
+            self.visible = False
+
+        return inner
 
     # --------------------------------------------------------------------
 
@@ -274,12 +387,16 @@ class Controller:
                     child=Widget.Label(
                         label="󰂯",
                     ),
-                    on_click=lambda self: Utils.exec_sh(bash_commands["bluetooth"][1]),
+                    on_click=lambda x: self.open_bluetooth_setup(),
                     css_classes=["battery", "bluetooth"],
                     style="font-size: 25px;",
                 ),
             ],
         )
+
+    @close_on_select
+    def open_bluetooth_setup(self):
+        Utils.exec_sh(bash_commands["bluetooth"][1])
 
     def set_bluetooth_label(self):
         result = Utils.exec_sh(
@@ -435,62 +552,21 @@ class Controller:
             for x in Utils.exec_sh(bash_commands["update"][1])
             .stdout.strip()
             .split("\n")
+            if x
         ]
-        return data
+        if len(data) > 0:
+            return data
+        return [
+            Widget.Label(label="No updates available", halign="start"),
+        ]
 
     # --------------------------------------------------------------------
 
-    def rev_box(self):
-        return Widget.Revealer(
-            transition_type="slide_down",
-            child=Widget.Box(
-                child=[
-                    Widget.Box(
-                        child=[
-                            self.battery_widget,
-                            self.volume_widget,
-                            self.backligh_widget,
-                            self.wifi_bluetooth_widget,
-                            self.vpn_airplane_widget,
-                            self.update_reveal_widget,
-                        ],
-                        css_classes=["controller"],
-                        vertical=True,
-                    ),
-                    Widget.Box(
-                        child=[
-                            Widget.Button(
-                                child=Widget.Label(
-                                    label="󱥠",
-                                    style=f"color: #061840{"80" if self.dpi else "FF"};",
-                                ),
-                                css_classes=["battery", "bluetooth"],
-                                on_click=lambda x: self.dpi_toggle(),
-                                hexpand=True,
-                            ),
-                        ],
-                        css_classes=["controller"],
-                        vertical=True,
-                    ),
-                ],
-                vertical=True,
-            ),
-            transition_duration=300,
-            reveal_child=True,
-        )
+    def player_control(self, player):
+        self.player_box.visible = player is not None
+        self.player = player
+        self.player.connect("closed", lambda x: self.player_disconnect())
 
-    def create_window(self):
-        revealer = self.rev_box()
-        box = Widget.Box(child=[revealer])
-
-        return Widget.RevealerWindow(
-            visible=True,
-            popup=True,
-            layer="top",
-            anchor=["top", "right"],
-            namespace="revealer-controller",
-            child=box,
-            revealer=revealer,
-            kb_mode="on_demand",
-            style="min-height: 1000px;",
-        )
+    def player_disconnect(self):
+        self.player_box.visible = False
+        print("disconnected")

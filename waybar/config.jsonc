@@ -33,7 +33,7 @@
             "*": 5
         },
         "format": "{name}{windows}",
-        "window-rewrite-default": " ",
+        "window-rewrite-default": " 󰚀",
         "window-rewrite": {
             "firefox": " ",
             "zen": " ",
@@ -41,10 +41,12 @@
             "vesktop": " ",
             "class<org.telegram.desktop>": " ",
             "code": " ",
+            "title<superfile>": " ",
             "kitty": " ",
             "audacious": " ",
-            "obsidian": " ",
-            "libreoffice": " "
+            "obsidian": " ",
+            "libreoffice": " ",
+            "thunderbird": " "
         }
     },
     "hyprland/window": {

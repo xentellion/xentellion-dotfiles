@@ -1,2 +1,4 @@
 #!/bin/bash
-hyprctl devices | grep -A 2 "at-translated-set-2-keyboard" | awk 'NR==3 {print toupper($3)}'| grep -Po '^..(?=.*)'
+DATA=$(hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap')
+DATA="${DATA:0:2}"
+echo "${DATA^^}"

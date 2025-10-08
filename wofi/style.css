@@ -2,17 +2,20 @@
 @define-color bg-color rgba(255, 255, 255, 1);
 @define-color accent-color rgba(217, 55, 42, 0.8);
 
+
 * {
   /* all: unset; */
-  font-family: monospace;
-  font-family: MesloLGS Nerd Font;
+  /* font-family: monospace; */
+  /* font-family: Tinos Nerd Font; */
+  font-family: RobotoMono Nerd Font;
   font-size: 1.0em;
+  /* border: 2px solid red; */
 }
 
 window {
   background-color: @border-color;
   border: 2px solid red;
-  /* padding: 5px; */
+  padding: 5px;
 }
 
 #outer-box {
@@ -20,11 +23,15 @@ window {
   background-size: contain;
   background-image: url(".config/hypr/images/swr.jpg");
   background-repeat: no-repeat;
-  box-shadow: 0 0 100px rgba(255, 255, 255, 0.9) inset;
+  /* box-shadow: 0 0 100px rgba(255, 255, 255, 0.9) inset; */
+  /* min-height: 100px; */
+  /* border: 2px solid red; */
+  padding-top: 250px;
+  padding-bottom: -250px;
 }
 
 #input {
-  margin: 250px 5px 5px 5px;
+  /* margin: 250px 5px 5px 5px; */
   border: 2px solid @border-color;
   border-radius: 30px;
   background-color: rgba(6, 24, 64, 0.7);
@@ -33,14 +40,22 @@ window {
 
 #scroll {
   background-color: @border-color;
-  min-height: 200px;
+  /* max-height: 100px; */
   border: 2px solid @bg-color;
   /* border-top: 5px solid black; */
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.6) inset;
+  border: 2px solid red;
   padding: 1px;
+  max-height: 100px;
 }
 
-#inner-box {}
+#inner-box {
+  /* border: 2px solid red; */
+  max-height: 100px;
+  border: 2px solid red;
+  padding-bottom: 1000px;
+  /* margin-top: -100px; */
+}
 
 #text {
   padding: 5px;

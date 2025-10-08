@@ -1,5 +1,5 @@
 show=drun
-height=500
+height=540
 always_parse_args=true
 show_all=false
 term=kitty

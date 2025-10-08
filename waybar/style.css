@@ -8,7 +8,7 @@
     all: unset;
     background-clip: padding-box;
     color: @bg-color;
-    font-family: MesloLGS Nerd Font;
+    font-family: RobotoMono Nerd Font;
     font-size: 14px;
     text-shadow: 2px 2px 2px rgba(6, 24, 64, 0.3);
     /* border: 1px solid red; */

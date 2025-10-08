@@ -16,4 +16,3 @@ volume = Volume()
 backlight = Backlight()
 
 controller = Controller()
-ctrl = controller.create_window()

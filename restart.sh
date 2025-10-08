@@ -18,6 +18,12 @@ cp -r ~/dotfiles/hypr/* ~/.config/hypr/
 # kitty
 cp ~/dotfiles/kitty/mykitty.conf ~/.config/kitty/mykitty.conf
 
+# nvim
+cp -r ~/dotfiles/neovim ~/.config/neovim
+
+# superfile
+cp -r ~/dotfiles/superfile/* ~/.config/superfile/
+
 # restart
 pkill waybar 
 waybar & disown
