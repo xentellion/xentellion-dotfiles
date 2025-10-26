@@ -35,17 +35,19 @@
         "format": "{name}{windows}",
         "window-rewrite-default": " 󰚀",
         "window-rewrite": {
-            "firefox": " ",
-            "zen": " ",
+            "class<firefox>": " ",
+            "class<zen>": " ",
             "keepassxc": " ",
             "vesktop": " ",
-            "class<org.telegram.desktop>": " ",
-            "code": " ",
+            "class<org.telegram.desktop>": " ",
+            "title<.* - (.*) - OSS>": " ",
             "title<superfile>": " ",
-            "kitty": " ",
+            "class<kitty>": " ",
             "audacious": " ",
             "obsidian": " ",
-            "libreoffice": " ",
+            "libreoffice writer": " 󰈬",
+            "libreoffice calc": " 󰈛",
+            "libreoffice impress": " 󰈧",
             "thunderbird": " "
         }
     },
@@ -84,6 +86,18 @@
             // "power-profiles-daemon"
         ]
     },
+    "group/tray" : {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "not-memory",
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/power",
+            "tray"
+        ]
+    },
     "group/data" : {
         "orientation": "inherit",
         "modules": [
@@ -93,8 +107,8 @@
             "network",
             "bluetooth",         
             "battery",
-            "tray",
-            "custom/power"
+            // "custom/power"
+            "group/tray"
         ]
     },
     "mpd": {
@@ -142,9 +156,25 @@
     },
     "clock": {
         "format": "{:%a %d %b %H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        // "format-alt": "{:%d.%m.%Y}"
-        "interval": 1
+        "tooltip-format": "<big>{calendar}</big>",
+        "locale": "en_GB.UTF-8",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='blue'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "interval": 1,
+        "actions": {
+            "on-scroll-up": "shift_down",
+            "on-scroll-down": "shift_up"
+        }
     },
     "cpu": {
         "format": "{usage}% ",
@@ -261,9 +291,10 @@
     // "custom/quote":
     // {
     //     "exec" : "sh ~/.config/waybar/scripts/quote.sh",
-    //     "exec-if": "sh ~/.config/waybar/scripts/quote_check.sh",
-    //     // "exec-on-event" : true,
-    //     "interval": 1,
+    //     // "exec-if": "sh ~/.config/waybar/scripts/quote_check.sh",
+    //     "exec-on-event" : true,
+    //     "on-click": "",
+    //     // "interval": 1,
     //     "format" : {}
     // }
 }

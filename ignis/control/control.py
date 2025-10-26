@@ -47,7 +47,7 @@ class Controller(Widget.RevealerWindow):
         )
         # Обновление по расписанию
         self.update_check = Utils.Poll(
-            timeout=10 * 60 * 1000,
+            timeout=10 * 1000,
             callback=lambda x: Utils.exec_sh(bash_commands["update"][0]),
         )
 
@@ -413,7 +413,7 @@ class Controller(Widget.RevealerWindow):
         # Авиарежим
         self.airplane_button = Widget.Button(
             child=Widget.Label(
-                label="󰀝",
+                label="",
                 style=f"color: #061840{"80" if self.airplane else "FF"};",
             ),
             on_click=lambda x: self.airplane_toggle(),
@@ -423,7 +423,7 @@ class Controller(Widget.RevealerWindow):
         # Включить/отключить маршрутизацию через тор
         self.vpn_button = Widget.Button(
             child=Widget.Label(
-                label="󰌆",
+                label="",
                 style=f"color: #061840{"80" if self.tor else "FF"};",
             ),
             css_classes=["battery", "bluetooth"],
@@ -431,15 +431,15 @@ class Controller(Widget.RevealerWindow):
             hexpand=True,
         )
         # Включить/отключить средства обхода dpi
-        self.dpi_button = Widget.Button(
-            child=Widget.Label(
-                label="󱥠",
-                style=f"color: #061840{"80" if self.dpi else "FF"};",
-            ),
-            css_classes=["battery", "bluetooth"],
-            on_click=lambda x: self.dpi_toggle(),
-            hexpand=True,
-        )
+        # self.dpi_button = Widget.Button(
+        #     child=Widget.Label(
+        #         label="󱥠",
+        #         style=f"color: #061840{"80" if self.dpi else "FF"};",
+        #     ),
+        #     css_classes=["battery", "bluetooth"],
+        #     on_click=lambda x: self.dpi_toggle(),
+        #     hexpand=True,
+        # )
         # Включить/отключить засыпание экрана
         self.idle_button = Widget.Button(
             child=Widget.Label(
@@ -488,7 +488,7 @@ class Controller(Widget.RevealerWindow):
                         # self.power_modes_button,
                         self.updates,
                         self.vpn_button,
-                        self.dpi_button,
+                        # self.dpi_button,
                         self.airplane_button,
                     ],
                     hexpand=True,
@@ -509,11 +509,11 @@ class Controller(Widget.RevealerWindow):
             f"color: #061840{"FF" if result != "started" else "80"};"
         )
 
-    def dpi_toggle(self):
-        result = Utils.exec_sh(bash_commands["dpi"][1]).stdout.strip()
-        self.dpi_button.child.set_style(
-            f"color: #061840{"FF" if result != "active" else "80"};"
-        )
+    # def dpi_toggle(self):
+    #     result = Utils.exec_sh(bash_commands["dpi"][1]).stdout.strip()
+    #     self.dpi_button.child.set_style(
+    #         f"color: #061840{"FF" if result != "active" else "80"};"
+    #     )
 
     def update_toggle(self):
         self.update_reveal_widget.visible = not self.update_reveal_widget.visible

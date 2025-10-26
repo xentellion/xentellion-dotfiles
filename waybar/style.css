@@ -121,7 +121,7 @@ tooltip label {
 
 #clock {
     font-weight: bold;
-    font-size: 16;
+    font-size: 16px;
     padding: 0 15px;
     margin: 7px 10px;
     background-color: alpha(@border-color, 0.5);
