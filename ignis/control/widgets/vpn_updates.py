@@ -1,9 +1,12 @@
+from ignis.app import IgnisApp
 from ignis.widgets import Widget, Box, Revealer
 from ignis.utils import Utils, Poll
 
 
-class UpdateRevealer(Revealer):
+APP = IgnisApp.get_default()
 
+
+class UpdateRevealer(Revealer):
     def __init__(self, BASH_COMMANDS: dict, update_check: Poll):
         self.update_check = update_check
         # Обновление по расписанию
@@ -31,6 +34,7 @@ class UpdateRevealer(Revealer):
             for x in self.update_check.output.stdout.strip().split("\n")
             if x
         ]
+        # return data
         if len(data) > 0:
             return data
         return [
@@ -54,7 +58,7 @@ class VpnAirplaneWidget(Box):
                 label="",
                 style=f"color: #061840{"80" if self.airplane else "FF"};",
             ),
-            on_click=lambda x: self.airplane_toggle(),
+            on_click=lambda x: self.airplane_toggle(BASH_COMMANDS),
             css_classes=["battery", "bluetooth"],
             hexpand=True,
         )
@@ -65,7 +69,7 @@ class VpnAirplaneWidget(Box):
                 style=f"color: #061840{"80" if self.tor else "FF"};",
             ),
             css_classes=["battery", "bluetooth"],
-            on_click=lambda x: self.vpn_toggle(),
+            on_click=lambda x: self.vpn_toggle(BASH_COMMANDS),
             hexpand=True,
         )
         # Включить/отключить засыпание экрана
@@ -94,7 +98,7 @@ class VpnAirplaneWidget(Box):
                     ),
                     Widget.Label(
                         label=self.update_check.bind(
-                            "output", lambda x: str(len(x.stdout.strip().split("\n")))
+                            "output", lambda x: self.check_updates(x)
                         ),
                         hexpand=True,
                     ),
@@ -102,7 +106,7 @@ class VpnAirplaneWidget(Box):
                 vertical=False,
             ),
             on_click=lambda x: self.update_toggle(),
-            on_right_click=lambda x: Utils.exec_sh("kitty sudo pacman -Syu"),
+            on_right_click=lambda x: self.load_updates(),
             css_classes=["battery", "bluetooth"],
             halign="fill",
             hexpand=True,
@@ -125,17 +129,29 @@ class VpnAirplaneWidget(Box):
             ],
         )
 
+    def check_updates(self, checkupdate_process):
+        if not checkupdate_process.stdout:
+            return "0"
+        return str(len(checkupdate_process.stdout.strip().split("\n")))
+
+    def update_toggle(self):
+        self.update_window.visible = not self.update_window.visible
+
+    @Utils.run_in_thread
+    def load_updates(self):
+        APP.close_window("revealer-controller")
+        Utils.exec_sh("kitty sudo pacman -Syu")
+
+    @Utils.run_in_thread
     def airplane_toggle(self, BASH_COMMANDS: dict):
         result = Utils.exec_sh(BASH_COMMANDS["airplane_mode"][1]).stdout.strip()
         self.airplane_button.child.set_style(
             f"color: #061840{"FF" if result != "enabled" else "80"};"
         )
 
+    @Utils.run_in_thread
     def vpn_toggle(self, BASH_COMMANDS: dict):
         result = Utils.exec_sh(BASH_COMMANDS["tor"][1]).stdout.split("\n")[-2]
         self.vpn_button.child.set_style(
             f"color: #061840{"FF" if result != "started" else "80"};"
         )
-
-    def update_toggle(self):
-        self.update_window.visible = not self.update_window.visible
