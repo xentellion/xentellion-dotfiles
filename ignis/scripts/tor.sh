@@ -1,5 +1,6 @@
 #!/bin/sh
 
+systemctl start tor
 DATA=$(torctl status | grep "torctl is" | grep -oE '[^[:space:]]+$')
 
 if [ "$DATA" == "started" ]; then

@@ -56,7 +56,7 @@
         "rewrite": {
             "": "Girls are now preparing..."
         },
-        "on-click" : "sh scripts/quote.sh",
+        "on-click": "sh scripts/quote.sh",
         "max-length": 50,
         "icon": true
     },
@@ -86,7 +86,7 @@
             // "power-profiles-daemon"
         ]
     },
-    "group/tray" : {
+    "group/tray": {
         "orientation": "inherit",
         "drawer": {
             "transition-duration": 300,
@@ -98,14 +98,14 @@
             "tray"
         ]
     },
-    "group/data" : {
+    "group/data": {
         "orientation": "inherit",
         "modules": [
             "hyprland/language",
             "idle_inhibitor",
             "pulseaudio",
             "network",
-            "bluetooth",         
+            "bluetooth",
             "battery",
             // "custom/power"
             "group/tray"
@@ -208,7 +208,18 @@
         "format-plugged": " {capacity}%",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": [ "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        "format-icons": [
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ]
     },
     "battery#bat2": {
         "bat": "BAT2"
@@ -234,7 +245,7 @@
         "format-disconnected": "󰤮 ",
         // "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "kitty nmtui connect",
-        "format-icons" : [
+        "format-icons": [
             "󰤯 ",
             "󰤟 ",
             "󰤢 ",
@@ -268,8 +279,8 @@
         // "on-click": "eww open topbar"
     },
     "bluetooth": {
-        "format": "",
-        "format-connected": " {num_connections} connected",
+        "format": "󰂯",
+        "format-connected": "󰂯 {num_connections} connected",
         "on-click": "bash ~/.config/waybar/scripts/bluetooth.sh",
         "on-click-right": "blueman-manager",
         "tooltip": true,
@@ -283,9 +294,8 @@
         "tooltip": true,
         "tooltip-format": "Power Control\n\nLeft: Menu \nMiddle: Reboot\nRight: Shutdown"
     },
-    "custom/system":
-    {
-        "format" : "",
+    "custom/system": {
+        "format": "",
         "tooltip": false
     }
     // "custom/quote":

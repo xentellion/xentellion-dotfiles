@@ -1,0 +1,28 @@
+{
+    "lock": "hyprlock",
+    "shutdown": "shutdown now",
+    "mute": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "network": "kitty nmtui connect",
+    "bluetooth": [
+        "bluetoothctl show | grep Powered | sed -e 's/\tPowered://'",
+        "blueman-manager"
+    ],
+    "idle": "",
+    "power": "",
+    "tor": [
+        "systemctl is-active tor",
+        "pkexec --user root sh ~/.config/ignis/scripts/tor.sh"
+    ],
+    "dpi": [
+        "systemctl is-active zapret",
+        "pkexec --user root sh ~/.config/ignis/scripts/dpi.sh"
+    ],
+    "airplane_mode": [
+        "nmcli networking",
+        "sh ~/.config/ignis/scripts/airplane.sh"
+    ],
+    "update": [
+        "checkupdates | wc -l",
+        "checkupdates"
+    ]
+}
