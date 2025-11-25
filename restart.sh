@@ -24,8 +24,12 @@ cp -r ~/dotfiles/neovim ~/.config/neovim
 # superfile
 cp -r ~/dotfiles/superfile/* ~/.config/superfile/
 
+# swaync
+cp -r ~/dotfiles/swaync/* ~/.config/swaync/
+
 # restart
 pkill waybar 
 waybar & disown
-# ignis init
-# pkill hyprpaper && hyprpaper & disown
+
+swaync-client -R -rs & notify-send -i ~/.config/swaync/icons/image.png "UI reload complete"
+

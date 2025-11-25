@@ -1,0 +1,37 @@
+#!/bin/bash
+HOME="/home/xentellion"
+
+export DISPLAY=:0
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+
+CAPACITY="/sys/class/power_supply/BAT1/capacity"
+POWERSUPPLY="/sys/class/power_supply/BAT1/status"
+STATUS_FILE=$HOME/.config/swaync/scripts/status.txt
+
+ICON_1=$HOME/.config/swaync/icons/warning.png
+ICON_2=$HOME/.config/swaync/icons/danger.png
+
+LOW=30
+TOO_LOW=15
+NOT_CHARGING="Discharging"
+
+BATTERY_LEVEL=$(cat $CAPACITY)
+STATUS=$(cat $POWERSUPPLY)
+read BATTERY_WARNING < $STATUS_FILE
+
+if [ $STATUS = $NOT_CHARGING ] && [ $BATTERY_LEVEL -le $LOW ]; then
+    if [ $BATTERY_LEVEL -le $TOO_LOW ] && [ $BATTERY_WARNING -lt 2 ]; then
+        /usr/bin/notify-send -u critical -i $ICON_2 "Battery critically low" "Battery level is at ${BATTERY_LEVEL}%!"
+        BATTERY_WARNING=2
+    elif [ $BATTERY_LEVEL -le $LOW ] && [ $BATTERY_WARNING -lt 1 ]; then
+        /usr/bin/notify-send -u normal -i $ICON_1 "Battery low" "Battery level is at ${BATTERY_LEVEL}%!"
+        BATTERY_WARNING=1
+    fi
+elif [ $STATUS != $NOT_CHARGING ]; then
+    # /usr/bin/notify-send -u normal -i $ICON_3 -u normal "Charging" "Battery started charging!"
+    BATTERY_WARNING=0
+fi
+
+echo $BATTERY_WARNING > $STATUS_FILE
+
+exit 0

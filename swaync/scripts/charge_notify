@@ -1,0 +1,11 @@
+#!/bin/bash
+ICON_3=~/.config/swaync/icons/ok.png
+
+while true
+do
+    if on_ac_power; then 
+        notify-send -u normal -i $ICON_3 -u normal "Charging" "Battery started charging!"
+    fi
+    sleep 10                       ## wait 10 sec before repeating
+done
+
