@@ -8,6 +8,7 @@ from .widgets.backlight import BacklightWidget
 from .widgets.network import NetworkWidget
 from .widgets.vpn_updates import UpdateRevealer, VpnAirplaneWidget
 from .widgets.media import Media
+from .widgets.notifications import Notifications
 
 import json
 
@@ -36,14 +37,14 @@ class Controller(Widget.RevealerWindow):
         # Сервисы
 
         # Блоки
-        self.player_box = Media()
-
         self.update_reveal_widget = UpdateRevealer(BASH_COMMANDS, self.update_check)
         self.vpn_airplane = VpnAirplaneWidget(
             BASH_COMMANDS,
             self.update_reveal_widget,
             self.update_check,
         )
+        self.player_box = Media()
+        self.notifications = Notifications()
 
         revealer = Widget.Revealer(
             transition_type="slide_left",

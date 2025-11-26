@@ -10,10 +10,9 @@ MPRIS = MprisService.get_default()
 
 class Player(Box):
     def __init__(self, player: MprisPlayer):
-        self._player = player
-        # self._colors_path = f"{MEDIA_SCSS_CACHE_DIR}/{self.clean_desktop_entry()}.scss"
-        player.connect("closed", lambda x: self.destroy())
-        player.connect("notify::art-url", lambda x, y: self.load_art())
+        self._mpris_player = player
+        self._mpris_player.connect("closed", lambda x: self.destroy())
+        self._mpris_player.connect("notify::art-url", lambda x, y: self.load_art())
 
         self.player_button = Widget.Button(
             child=Widget.Icon(
@@ -32,28 +31,27 @@ class Player(Box):
             css_classes=["battery", "bluetooth"],
         )
 
+        # self.load_art()
         self.scale = Widget.Scale(
-            value=player.bind("position"),
-            max=player.bind("length"),
+            min=0,
+            max=self._mpris_player.bind("length"),
+            value=self._mpris_player.bind("position"),
             hexpand=True,
             css_classes=["control-metric"],
-            on_change=lambda x: asyncio.create_task(player.set_position_async(x.value)),
-            visible=player.bind("position", lambda value: value != -1),
+            on_change=lambda x: asyncio.create_task(self._mpris_player.set_position_async(x.value)),
+            visible=self._mpris_player.bind("position", lambda value: value != -1),
         )
-
-        self.load_art()
 
         super().__init__(
             child=[
                 Widget.Label(
                     ellipsize="end",
                     label=player.bind("title"),
-                    style="color: white;",
                     max_width_chars=30,
                 ),
-                self.scale,
                 Widget.Box(
                     child=[
+                        self.scale,
                         Widget.Button(
                             child=Widget.Icon(
                                 image="media-skip-backward-symbolic",
@@ -76,27 +74,25 @@ class Player(Box):
                             visible=player.bind("can_go_next"),
                         ),
                     ],
-                    halign="center",
+                    valign="end",
+                    halign="fill",
                     hexpand=True,
                     vexpand=True,
-                    valign="end",
                 ),
             ],
             css_classes=["controller", "player_background"],
-            style=f'background-image: url("{self._player.art_url}");',
+            style=f'background-image: url("file://{self._mpris_player.art_url}");',
             vertical=True,
             visible=True,
-            # height_request=188,
             valign="end",
         )
-        # self.load_art()
 
     def load_art(self):
-        if not self._player.art_url:
-            self.style = "background-image: none;"
         try:
-            self.style = f'background-image: url("{self._player.art_url}");'
-        except TypeError:
+            self.style = f'background-image: url("file://{self._mpris_player.art_url}");'
+        except TypeError as e:
+            print(e)
+            self.style = "background-image: none;"
             return
 
     def destroy(self):
@@ -117,5 +113,6 @@ class Media(Box):
 
     def __add_player(self, obj: MprisPlayer) -> None:
         player = Player(obj)
+        player.load_art()
         self.append(player)
         # player.set_reveal_child(True)

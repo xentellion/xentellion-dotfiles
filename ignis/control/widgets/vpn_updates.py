@@ -63,13 +63,22 @@ class VpnAirplaneWidget(Box):
             hexpand=True,
         )
         # Включить/отключить маршрутизацию через тор
-        self.vpn_button = Widget.Button(
+        self.tor_button = Widget.Button(
             child=Widget.Label(
                 label="",
                 style=f"color: #061840{"80" if self.tor else "FF"};",
             ),
             css_classes=["battery", "bluetooth"],
             on_click=lambda x: self.vpn_toggle(BASH_COMMANDS),
+            hexpand=True,
+        )
+        # Включить/отключить засыпание экрана
+        self.vpn_button = Widget.Button(
+            child=Widget.Label(
+                label="󰌆",
+            ),
+            css_classes=["battery", "bluetooth"],
+            on_click=lambda x: self.open_vpn(),
             hexpand=True,
         )
         # Включить/отключить засыпание экрана
@@ -120,6 +129,7 @@ class VpnAirplaneWidget(Box):
                         # self.idle_button,
                         # self.power_modes_button,
                         self.updates,
+                        self.tor_button,
                         self.vpn_button,
                         self.airplane_button,
                     ],
@@ -138,6 +148,11 @@ class VpnAirplaneWidget(Box):
         self.update_window.visible = not self.update_window.visible
 
     @Utils.run_in_thread
+    def open_vpn(self):
+        APP.close_window("revealer-controller")
+        Utils.exec_sh("/opt/v2rayn-bin/v2rayN")
+
+    @Utils.run_in_thread
     def load_updates(self):
         APP.close_window("revealer-controller")
         Utils.exec_sh("kitty sudo pacman -Syu")
@@ -152,6 +167,6 @@ class VpnAirplaneWidget(Box):
     @Utils.run_in_thread
     def vpn_toggle(self, BASH_COMMANDS: dict):
         result = Utils.exec_sh(BASH_COMMANDS["tor"][1]).stdout.split("\n")[-2]
-        self.vpn_button.child.set_style(
+        self.tor_button.child.set_style(
             f"color: #061840{"FF" if result != "started" else "80"};"
         )

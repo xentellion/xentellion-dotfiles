@@ -24,7 +24,7 @@ if [ $STATUS = $NOT_CHARGING ] && [ $BATTERY_LEVEL -le $LOW ]; then
         /usr/bin/notify-send -u critical -i $ICON_2 "Battery critically low" "Battery level is at ${BATTERY_LEVEL}%!"
         BATTERY_WARNING=2
     elif [ $BATTERY_LEVEL -le $LOW ] && [ $BATTERY_WARNING -lt 1 ]; then
-        /usr/bin/notify-send -u normal -i $ICON_1 "Battery low" "Battery level is at ${BATTERY_LEVEL}%!"
+        /usr/bin/notify-send -u critical -i $ICON_1 "Battery low" "Battery level is at ${BATTERY_LEVEL}%!"
         BATTERY_WARNING=1
     fi
 elif [ $STATUS != $NOT_CHARGING ]; then
