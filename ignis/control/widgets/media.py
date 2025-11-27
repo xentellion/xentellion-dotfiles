@@ -15,20 +15,14 @@ class Player(Box):
         self._mpris_player.connect("notify::art-url", lambda x, y: self.load_art())
 
         self.player_button = Widget.Button(
-            child=Widget.Icon(
-                image=player.bind(
+            child=Widget.Label(
+                label=player.bind(
                     "playback_status",
-                    lambda value: (
-                        "media-playback-pause-symbolic"
-                        if value == "Playing"
-                        else "media-playback-start-symbolic"
-                    ),
-                ),
-                pixel_size=18,
+                    lambda value: ("󰏤" if value == "Playing" else "󰼛"),
+                )
             ),
             on_click=lambda x: asyncio.create_task(player.play_pause_async()),
             visible=player.bind("can_play"),
-            css_classes=["battery", "bluetooth"],
         )
 
         # self.load_art()
@@ -38,7 +32,9 @@ class Player(Box):
             value=self._mpris_player.bind("position"),
             hexpand=True,
             css_classes=["control-metric"],
-            on_change=lambda x: asyncio.create_task(self._mpris_player.set_position_async(x.value)),
+            on_change=lambda x: asyncio.create_task(
+                self._mpris_player.set_position_async(x.value)
+            ),
             visible=self._mpris_player.bind("position", lambda value: value != -1),
         )
 
@@ -48,30 +44,31 @@ class Player(Box):
                     ellipsize="end",
                     label=player.bind("title"),
                     max_width_chars=30,
+                    css_classes=["player_text"]
                 ),
                 Widget.Box(
                     child=[
                         self.scale,
-                        Widget.Button(
-                            child=Widget.Icon(
-                                image="media-skip-backward-symbolic",
-                                pixel_size=20,
-                            ),
-                            css_classes=["battery", "bluetooth"],
-                            on_click=lambda x: asyncio.create_task(
-                                player.previous_async()
-                            ),
-                            visible=player.bind("can_go_previous"),
-                        ),
-                        self.player_button,
-                        Widget.Button(
-                            child=Widget.Icon(
-                                image="media-skip-forward-symbolic",
-                                pixel_size=20,
-                            ),
-                            css_classes=["battery", "bluetooth"],
-                            on_click=lambda x: asyncio.create_task(player.next_async()),
-                            visible=player.bind("can_go_next"),
+                        Widget.Box(
+                            child=[
+                                Widget.Button(
+                                    child=Widget.Label(label="󰼥"),
+                                    on_click=lambda x: asyncio.create_task(
+                                        player.previous_async()
+                                    ),
+                                    visible=player.bind("can_go_previous"),
+                                ),
+                                self.player_button,
+                                Widget.Button(
+                                    child=Widget.Label(label="󰼦"),
+                                    on_click=lambda x: asyncio.create_task(
+                                        player.next_async()
+                                    ),
+                                    visible=player.bind("can_go_next"),
+                                ),
+                            ],
+                            css_classes=["player_controls"],
+                            spacing=5,
                         ),
                     ],
                     valign="end",
@@ -89,7 +86,9 @@ class Player(Box):
 
     def load_art(self):
         try:
-            self.style = f'background-image: url("file://{self._mpris_player.art_url}");'
+            self.style = (
+                f'background-image: url("file://{self._mpris_player.art_url}");'
+            )
         except TypeError as e:
             print(e)
             self.style = "background-image: none;"

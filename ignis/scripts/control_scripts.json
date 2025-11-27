@@ -1,6 +1,7 @@
 {
     "lock": "hyprlock",
     "shutdown": "shutdown now",
+    "reboot": "reboot",
     "mute": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "network": "kitty nmtui connect",
     "bluetooth": [

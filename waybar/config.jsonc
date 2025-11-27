@@ -290,10 +290,10 @@
     "custom/power": {
         "format": "󰒓",
         "on-click": "ignis toggle revealer-controller",
-        "on-click-right": "shutdown now",
-        "on-click-middle": "reboot",
-        "tooltip": true,
-        "tooltip-format": "Power Control\n\nLeft: Menu \nMiddle: Reboot\nRight: Shutdown"
+        // "on-click-right": "shutdown now",
+        // "on-click-middle": "reboot",
+        "tooltip": false
+        // "tooltip-format": "Power Control\n\nLeft: Menu \nMiddle: Reboot\nRight: Shutdown"
     },
     "custom/system": {
         "format": "",

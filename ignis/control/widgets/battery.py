@@ -40,8 +40,14 @@ class BatteryWidget(Box):
                         Widget.Button(
                             child=Widget.Label(label="󰐥"),
                             css_classes=["battery"],
-                            on_click=lambda self: Utils.exec_sh(
+                            # on_click=lambda self: Utils.exec_sh(
+                            #     BASH_COMMANDS["shutdown"]
+                            # ),
+                            on_right_click=lambda self: Utils.exec_sh(
                                 BASH_COMMANDS["shutdown"]
+                            ),
+                            on_middle_click=lambda self: Utils.exec_sh(
+                                BASH_COMMANDS["reboot"]
                             ),
                         ),
                     ]
