@@ -8,7 +8,8 @@ from .widgets.backlight import BacklightWidget
 from .widgets.network import NetworkWidget
 from .widgets.vpn_updates import UpdateRevealer, VpnAirplaneWidget
 from .widgets.media import Media
-from .widgets.notifications import Notifications
+
+# from .widgets.notifications import Notifications
 
 import json
 
@@ -44,7 +45,11 @@ class Controller(Widget.RevealerWindow):
             self.update_check,
         )
         self.player_box = Media()
-        self.notifications = Notifications()
+        # self.notifications = Notifications()
+        self.nw = NetworkWidget(BASH_COMMANDS)
+        # self.nw.no_connection_box.visible = self.nw.bind_many(
+        #     ["wifi_stat", "eth_stat"], lambda x, y: print(x, y)
+        # )
 
         revealer = Widget.Revealer(
             transition_type="slide_left",
@@ -63,6 +68,7 @@ class Controller(Widget.RevealerWindow):
                         vertical=True,
                     ),
                     self.player_box,
+                    # self.notifications,
                 ],
                 vertical=True,
             ),

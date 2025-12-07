@@ -1,6 +1,7 @@
 import asyncio
 from ignis.widgets import Widget, Box
 from ignis.services.mpris import MprisService, MprisPlayer
+import imagesize
 
 # from ignis.utils import Timeout
 
@@ -44,7 +45,7 @@ class Player(Box):
                     ellipsize="end",
                     label=player.bind("title"),
                     max_width_chars=30,
-                    css_classes=["player_text"]
+                    css_classes=["player_text"],
                 ),
                 Widget.Box(
                     child=[
@@ -86,19 +87,19 @@ class Player(Box):
 
     def load_art(self):
         try:
-            self.style = (
-                f'background-image: url("file://{self._mpris_player.art_url}");'
-            )
-        except TypeError as e:
+            width, height = imagesize.get(self._mpris_player.art_url)
+        except (FileNotFoundError, TypeError) as e:
             print(e)
-            self.style = "background-image: none;"
-            return
+            self.style = "background-image: none; min-height: 0%;"
+        else:
+            url = f"file://{self._mpris_player.art_url}"
+            self.style = f"""
+                background-image: url('{url}');
+                min-height: {300 * height // width}px;"""
 
     def destroy(self):
         self.set_visible = False
         super().unparent()
-        # self.set_reveal_child(False)
-        # Timeout(self.transition_duration, super().unparent)
 
 
 class Media(Box):

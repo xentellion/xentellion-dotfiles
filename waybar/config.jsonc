@@ -7,16 +7,14 @@
     //     "~/dotfiles/waybar/modules.json"
     // ],
     "modules-left": [
-        "group/hardware",
-        "hyprland/window",
-        "custom/quote"
+        "group/left"
     ],
     "modules-center": [
         "hyprland/workspaces"
     ],
     "modules-right": [
         "clock",
-        "group/data"
+        "group/right"
     ],
     "hyprland/language": {
         "format": "{}",
@@ -37,18 +35,18 @@
         "window-rewrite": {
             "class<firefox>": " ",
             "class<zen>": " ",
-            "keepassxc": " ",
-            "vesktop": " ",
+            "class<org.keepassxc.KeePassXC>": " ",
+            "class<vesktop>": " ",
             "class<org.telegram.desktop>": " ",
-            "title<.* - (.*) - OSS>": " ",
+            "class<code-oss>": " ",
             "title<superfile>": " ",
             "class<kitty>": " ",
-            "audacious": " ",
-            "obsidian": " ",
-            "libreoffice writer": " 󰈬",
-            "libreoffice calc": " 󰈛",
-            "libreoffice impress": " 󰈧",
-            "thunderbird": " ",
+            "class<audacious>": " ",
+            "class<obsidian>": " ",
+            "class<libreoffice-writer>": " 󰈬",
+            "class<libreoffice-calc>": " 󰈛",
+            "class<libreoffice-impress>": " 󰈧",
+            "class<org.mozilla.thunderbird": " ",
             "class<v2rayN>": " 󰌆"
         }
     },
@@ -59,7 +57,8 @@
         },
         "on-click": "sh scripts/quote.sh",
         "max-length": 50,
-        "icon": true
+        "icon": true,
+        "tooltip": false
     },
     "keyboard-state": {
         "numlock": true,
@@ -70,24 +69,52 @@
             "unlocked": ""
         }
     },
+    "group/left": {
+        "orientation": "inherit",
+        "modules": [
+            "group/hardware",
+            "hyprland/window"
+            // "custom/quote"
+        ]
+    },
     "group/hardware": {
         "orientation": "inherit",
         "drawer": {
             "transition-duration": 300,
             "children-class": "not-memory",
-            "transition-left-to-right": false
+            "transition-left-to-right": true
         },
         "modules": [
             "custom/system",
             "disk",
             "cpu",
             "memory",
-            "temperature",
-            "custom/separator"
+            "temperature"
             // "power-profiles-daemon"
         ]
     },
-    "group/tray": {
+    "group/right": {
+        "orientation": "inherit",
+        "modules": [
+            "group/data",
+            "group/trayblock"
+            // "custom/power"
+        ]
+    },
+    "group/data": {
+        "orientation": "inherit",
+        "modules": [
+            "hyprland/language",
+            "idle_inhibitor",
+            "pulseaudio#1",
+            "pulseaudio#2",
+            "network",
+            "bluetooth",
+            "battery"
+            // "custom/power"
+        ]
+    },
+    "group/trayblock": {
         "orientation": "inherit",
         "drawer": {
             "transition-duration": 300,
@@ -97,19 +124,6 @@
         "modules": [
             "custom/power",
             "tray"
-        ]
-    },
-    "group/data": {
-        "orientation": "inherit",
-        "modules": [
-            "hyprland/language",
-            "idle_inhibitor",
-            "pulseaudio",
-            "network",
-            "bluetooth",
-            "battery",
-            // "custom/power"
-            "group/tray"
         ]
     },
     "mpd": {
@@ -152,8 +166,8 @@
         "tooltip": false
     },
     "tray": {
-        "icon-size": 18
-        // "spacing": 2
+        "icon-size": 18,
+        "spacing": 16
     },
     "clock": {
         "format": "{:%a %d %b %H:%M}",
@@ -237,32 +251,25 @@
         }
     },
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        // "format-wifi": "{signalStrength}% ",
         "format-wifi": "{icon}",
         "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{essid}\n{signalStrength}%\n{ifname} via {gwaddr} \n{ipaddr}/{cidr}",
+        "tooltip-format": "No connection",
+        "tooltip-format-wifi": "<b>{essid} ({signalStrength}%) </b>\n{ipaddr}/{cidr}",
+        "tooltip-format-ethernet": "<b>{ifname} </b>\nvia {gwaddr} \n{ipaddr}/{cidr}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰤮 ",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "kitty nmtui connect",
+        "on-click": "nmgui",
         "format-icons": [
-            "󰤯 ",
-            "󰤟 ",
-            "󰤢 ",
-            "󰤥 ",
-            "󰤨 "
+            "󰤯",
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
         ]
     },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        // "format": "{volume}% {icon} {format_source}",
-        "format": "{icon}  {format_source}",
-        "format-bluetooth": "{icon}  {format_source}",
-        "format-bluetooth-muted": "󰟎  {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "",
-        "format-source-muted": "",
+    "pulseaudio#1": {
+        "format": "{icon}",
+        "format-muted": "",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
@@ -271,13 +278,16 @@
             "portable": "",
             "car": "",
             "default": [
-                "",
-                "",
-                ""
+                " ",
+                " "
             ]
-        }
-        // "on-click": "pavucontrol"
-        // "on-click": "eww open topbar"
+        },
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+    "pulseaudio#2": {
+        "format": "{format_source}",
+        "format-source": " ",
+        "format-source-muted": ""
     },
     "bluetooth": {
         "format": "󰂯",
@@ -288,7 +298,7 @@
         "tooltip-format": "Bluetooth\n\nLeft: Turn BT on/off\nRight: Open BT manager"
     },
     "custom/power": {
-        "format": "󰒓",
+        "format": " ",
         "on-click": "ignis toggle revealer-controller",
         // "on-click-right": "shutdown now",
         // "on-click-middle": "reboot",

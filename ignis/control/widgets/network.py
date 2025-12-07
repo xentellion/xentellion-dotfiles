@@ -2,6 +2,7 @@ from ignis.widgets import Widget, Box
 from ignis.utils import Utils
 from ignis.app import IgnisApp
 from ignis.services.network import NetworkService
+from ignis.gobject import IgnisProperty
 
 
 APP = IgnisApp.get_default()
@@ -14,7 +15,10 @@ class NetworkWidget(Box):
             Utils.exec_sh(BASH_COMMANDS["bluetooth"][0]).stdout.strip() == "yes"
         )
 
-        no_connection_box = Widget.Box(
+        # self.__wifi_stat = self.network.wifi.bind("is_connected", lambda x: x)
+        # self.__eth_stat = self.network.ethernet.bind("is_connected", lambda x: x)
+
+        self.no_connection_box = Widget.Box(
             child=[
                 Widget.Label(
                     label="󱎘",
@@ -61,7 +65,7 @@ class NetworkWidget(Box):
                     hexpand=True,
                 ),
             ],
-            visible=self.network.wifi.bind("is_connected"),
+            visible=self.network.wifi.bind("is_connected", lambda x: x),
             hexpand=True,
         )
 
@@ -79,15 +83,17 @@ class NetworkWidget(Box):
                         Widget.Label(
                             label="Ethernet",
                         ),
-                        # Widget.Label(
-                        #     label=self.network.ethernet.devices[
-                        #         0
-                        #     ].bind(
-                        #         "speed"
-                        #         # lambda x: self.set_network(),
-                        #     ),
-                        #     style="font-size: 75%; margin-top:5px;",
-                        # ),
+                        Widget.Label(
+                            label=self.network.ethernet.bind(
+                                "is_connected",
+                                lambda x: (
+                                    f"{self.network.ethernet.devices[0].speed} Mbps"
+                                    if len(self.network.ethernet.devices)
+                                    else "Unknown"
+                                ),
+                            ),
+                            style="font-size: 75%; margin-top:5px;",
+                        ),
                     ],
                     vertical=True,
                 ),
@@ -104,7 +110,7 @@ class NetworkWidget(Box):
                 Widget.Button(
                     child=Widget.Box(
                         child=[
-                            no_connection_box,
+                            self.no_connection_box,
                             wifi_box,
                             ethernet_box,
                         ],
@@ -125,6 +131,14 @@ class NetworkWidget(Box):
                 ),
             ],
         )
+
+    @IgnisProperty
+    def wifi_stat(self):
+        return self.__wifi_stat
+
+    @IgnisProperty
+    def eth_stat(self):
+        return self.__eth_stat
 
     @Utils.run_in_thread
     def open_network_setup(self, BASH_COMMANDS: dict):

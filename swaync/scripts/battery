@@ -19,6 +19,10 @@ BATTERY_LEVEL=$(cat $CAPACITY)
 STATUS=$(cat $POWERSUPPLY)
 read BATTERY_WARNING < $STATUS_FILE
 
+if [ $BATTERY_WARNING = '' ]; then
+    BATTERY_WARNING=0
+fi
+
 if [ $STATUS = $NOT_CHARGING ] && [ $BATTERY_LEVEL -le $LOW ]; then
     if [ $BATTERY_LEVEL -le $TOO_LOW ] && [ $BATTERY_WARNING -lt 2 ]; then
         /usr/bin/notify-send -u critical -i $ICON_2 "Battery critically low" "Battery level is at ${BATTERY_LEVEL}%!"
@@ -28,6 +32,7 @@ if [ $STATUS = $NOT_CHARGING ] && [ $BATTERY_LEVEL -le $LOW ]; then
         BATTERY_WARNING=1
     fi
 elif [ $STATUS != $NOT_CHARGING ]; then
+    echo "Not charging"
     # /usr/bin/notify-send -u normal -i $ICON_3 -u normal "Charging" "Battery started charging!"
     BATTERY_WARNING=0
 fi
