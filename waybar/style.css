@@ -9,7 +9,8 @@
     background-clip: padding-box;
     color: @bg-color;
     font-family: RobotoMono Nerd Font;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: bold;
     text-shadow: 2px 2px 2px rgba(6, 24, 64, 0.3);
     transition: all 0.3s ease-in-out;
     /* border: 1px solid red; */
@@ -39,7 +40,6 @@ tooltip label {
     border-radius: 30px;
     background-color: alpha(@border-color, 0.5);
     box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
-    font-weight: bold;
 }
 
 #workspaces button {
@@ -53,7 +53,6 @@ tooltip label {
 }
 
 #workspaces button label {
-    font-size: 16px;
     color: @border-color;
 }
 
@@ -96,13 +95,14 @@ tooltip label {
     min-width: 100px;
 }
 
-#left {
-    font-weight: bold;
+#window * {
+    font-size: 14px;
 }
 
 #hardware,
 #trayblock {
-    margin: 5px 4px;
+    margin: 5px;
+    border: 1px solid transparent;
 }
 
 #hardware:hover,
@@ -112,42 +112,39 @@ tooltip label {
     box-shadow: 0px 0 4px alpha(@bg-color, 0.6);
 }
 
-#hardware *,
-#trayblock * {
-    margin: 0 5px;
+#hardware_data * {
+    margin: 0;
+    margin-left: 1.5rem;
 }
 
-#trayblock * {
+#util_data * {
     padding: 0px;
-}
-
-#data * {
-    padding: 0px;
-    margin-right: 1.2rem;
+    margin: 5px 0;
     min-width: 1.5rem;
+    font-size: 15px;
+    padding: 0 5px;
 }
 
-#clock {
-    font-size: 16px;
-    font-weight: bold;
+#hardware_data>*:first-child*,
+#util_data>*:first-child* {
+    margin-left: 0px;
 }
 
-#language {
-    font-size: 16px;
-    font-weight: bold;
+#util_data>*:first-child* {
+    margin-right: 1.2rem;
 }
 
-#pulseaudio.1 {
-    margin-right: 0.7rem;
+#hardware_data>*:last-child*,
+#util_data>*:last-child* {
+    margin-right: 0px;
 }
 
-#bluetooth {
-    margin: 5px 1.2rem 5px 0;
+#network {
+    margin-left: -1px;
 }
 
 #battery {
-    margin: 5px 0;
-    padding: 0px 5px;
+    font-weight: normal;
 }
 
 #bluetooth.on,
@@ -172,20 +169,24 @@ tooltip label {
     animation-timing-function: steps(12);
 }
 
+#trayblock * {
+    padding: 0px;
+}
+
 #custom-power {
-    min-width: 20px;
-    padding: 2px;
+    min-width: 34px;
+    margin: 0 5px;
     border-radius: 0;
     background-image: url("media/icons8-arch-linux-24.png");
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 24px;
     background-position: center;
 }
 
-tray.empty {
-    padding: 0;
-    margin: 0;
+#tray {
+    margin: 0px 10px;
 }
+
 
 /* ANIMATIONS */
 

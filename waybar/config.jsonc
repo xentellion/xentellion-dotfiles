@@ -30,24 +30,24 @@
         "persistent-workspaces": {
             "*": 5
         },
-        "format": "{name}{windows}",
-        "window-rewrite-default": " 󰚀",
+        "format": "{name} {windows}",
+        "window-rewrite-default": "󰚀",
         "window-rewrite": {
-            "class<firefox>": " ",
-            "class<zen>": " ",
-            "class<org.keepassxc.KeePassXC>": " ",
-            "class<vesktop>": " ",
-            "class<org.telegram.desktop>": " ",
-            "class<code-oss>": " ",
-            "title<superfile>": " ",
-            "class<kitty>": " ",
-            "class<audacious>": " ",
-            "class<obsidian>": " ",
-            "class<libreoffice-writer>": " 󰈬",
-            "class<libreoffice-calc>": " 󰈛",
-            "class<libreoffice-impress>": " 󰈧",
-            "class<org.mozilla.thunderbird": " ",
-            "class<v2rayN>": " 󰌆"
+            "class<firefox>": "",
+            "class<zen>": "",
+            "class<org.keepassxc.KeePassXC>": "",
+            "class<vesktop>": "",
+            "class<org.telegram.desktop>": "",
+            "class<code-oss>": "",
+            "title<superfile>": "",
+            "class<kitty>": "",
+            "class<audacious>": "",
+            "class<obsidian>": "",
+            "class<libreoffice-writer>": "󰈬",
+            "class<libreoffice-calc>": "󰈛",
+            "class<libreoffice-impress>": "󰈧",
+            "class<org.mozilla.thunderbird": "",
+            "class<v2rayN>": "󰌆"
         }
     },
     "hyprland/window": {
@@ -86,22 +86,26 @@
         },
         "modules": [
             "custom/system",
+            "group/hardware_data"
+        ]
+    },
+    "group/hardware_data": {
+        "orientation": "inherit",
+        "modules": [
             "disk",
             "cpu",
             "memory",
             "temperature"
-            // "power-profiles-daemon"
         ]
     },
     "group/right": {
         "orientation": "inherit",
         "modules": [
-            "group/data",
+            "group/util_data",
             "group/trayblock"
-            // "custom/power"
         ]
     },
-    "group/data": {
+    "group/util_data": {
         "orientation": "inherit",
         "modules": [
             "hyprland/language",
@@ -126,32 +130,6 @@
             "tray"
         ]
     },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
     "disk": {
         "interval": 30,
         "format": "{percentage_used}% ",
@@ -167,7 +145,9 @@
     },
     "tray": {
         "icon-size": 18,
-        "spacing": 16
+        "spacing": 16,
+        "show-passive-items": true,
+        "reverse-direction": true
     },
     "clock": {
         "format": "{:%a %d %b %H:%M}",
@@ -269,25 +249,31 @@
     },
     "pulseaudio#1": {
         "format": "{icon}",
-        "format-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
+            "headphone": "󰋋",
+            "headphone-muted": "󰟎",
+            "hands-free": "󰋋",
+            "hands-free-muted": "󰟎",
             "headset": "󰋋",
-            "phone": "",
-            "portable": "",
+            "headset-muted": "󰟎",
+            "phone": "󰏲",
+            "phone-muted": "󰷯",
+            "portable": "󰏲",
+            "portable-muted": "󰷯",
             "car": "",
             "default": [
-                " ",
-                " "
-            ]
+                "",
+                "",
+                ""
+            ],
+            "default-muted": ""
         },
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     },
     "pulseaudio#2": {
         "format": "{format_source}",
-        "format-source": " ",
-        "format-source-muted": ""
+        "format-source": "",
+        "format-source-muted": ""
     },
     "bluetooth": {
         "format": "󰂯",
@@ -303,19 +289,9 @@
         // "on-click-right": "shutdown now",
         // "on-click-middle": "reboot",
         "tooltip": false
-        // "tooltip-format": "Power Control\n\nLeft: Menu \nMiddle: Reboot\nRight: Shutdown"
     },
     "custom/system": {
         "format": "",
         "tooltip": false
     }
-    // "custom/quote":
-    // {
-    //     "exec" : "sh ~/.config/waybar/scripts/quote.sh",
-    //     // "exec-if": "sh ~/.config/waybar/scripts/quote_check.sh",
-    //     "exec-on-event" : true,
-    //     "on-click": "",
-    //     // "interval": 1,
-    //     "format" : {}
-    // }
 }
