@@ -27,6 +27,9 @@ cp -r ~/dotfiles/superfile/* ~/.config/superfile/
 # swaync
 cp -r ~/dotfiles/swaync/* ~/.config/swaync/
 
+# quickshell
+cp -r ~/dotfiles/quickshell/* ~/.config/quickshell/
+
 # restart
 pkill waybar 
 waybar & disown

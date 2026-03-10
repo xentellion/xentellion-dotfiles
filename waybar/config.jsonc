@@ -30,24 +30,25 @@
         "persistent-workspaces": {
             "*": 5
         },
-        "format": "{name} {windows}",
-        "window-rewrite-default": "󰚀",
+        "format": "{name}{windows}",
+        "window-rewrite-default": " 󰚀",
         "window-rewrite": {
-            "class<firefox>": "",
-            "class<zen>": "",
-            "class<org.keepassxc.KeePassXC>": "",
-            "class<vesktop>": "",
-            "class<org.telegram.desktop>": "",
-            "class<code-oss>": "",
-            "title<superfile>": "",
-            "class<kitty>": "",
-            "class<audacious>": "",
-            "class<obsidian>": "",
-            "class<libreoffice-writer>": "󰈬",
-            "class<libreoffice-calc>": "󰈛",
-            "class<libreoffice-impress>": "󰈧",
-            "class<org.mozilla.thunderbird": "",
-            "class<v2rayN>": "󰌆"
+            "class<firefox>": " ",
+            "class<zen>": " ",
+            "class<waterfox>": " ",
+            "class<org.keepassxc.KeePassXC>": " ",
+            "class<vesktop>": " ",
+            "class<org.telegram.desktop>": " ",
+            "class<code-oss>": " ",
+            "title<superfile>": " ",
+            "class<kitty>": " ",
+            "class<audacious>": " ",
+            "class<obsidian>": " ",
+            "class<libreoffice-writer>": " 󰈬",
+            "class<libreoffice-calc>": " 󰈛",
+            "class<libreoffice-impress>": " 󰈧",
+            "class<org.mozilla.thunderbird": " ",
+            "class<v2rayN>": " 󰟪"
         }
     },
     "hyprland/window": {
@@ -61,12 +62,11 @@
         "tooltip": false
     },
     "keyboard-state": {
-        "numlock": true,
         "capslock": true,
-        "format": "{name} {icon}",
+        "format": "{icon}",
         "format-icons": {
-            "locked": "",
-            "unlocked": ""
+            "locked": "CAPS ",
+            "unlocked": "      "
         }
     },
     "group/left": {
@@ -109,6 +109,7 @@
         "orientation": "inherit",
         "modules": [
             "hyprland/language",
+            "keyboard-state",
             "idle_inhibitor",
             "pulseaudio#1",
             "pulseaudio#2",

@@ -75,7 +75,7 @@ class VpnAirplaneWidget(Box):
         # Включить/отключить засыпание экрана
         self.vpn_button = Widget.Button(
             child=Widget.Label(
-                label="󰌆",
+                label="󰟪",
             ),
             css_classes=["battery", "bluetooth"],
             on_click=lambda x: self.open_vpn(),

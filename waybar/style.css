@@ -130,13 +130,26 @@ tooltip label {
     margin-left: 0px;
 }
 
-#util_data>*:first-child* {
-    margin-right: 1.2rem;
-}
-
 #hardware_data>*:last-child*,
 #util_data>*:last-child* {
     margin-right: 0px;
+}
+
+#keyboard-state {
+    margin: 0;
+    /* margin-right: 1.5rem; */
+    padding: 0 5px;
+}
+
+#keyboard-state label {
+    color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+#keyboard-state label.locked {
+    color: red;
+    min-width: 100px;
 }
 
 #network {
