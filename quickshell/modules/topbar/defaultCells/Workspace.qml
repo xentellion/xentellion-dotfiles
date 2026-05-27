@@ -86,14 +86,14 @@ Rectangle {
                         ColorAnimation {
                             target: classText
                             property: "color"
-                            to: Theme.textColor
+                            to: Theme.white
                             duration: workspace.blinkDuration
                             easing.type: workspace.blinkEasing
                         }
                         ColorAnimation {
                             targets: classText
                             property: "color"
-                            to: "white"
+                            to: Theme.textColor
                             duration: workspace.blinkDuration
                             easing.type: workspace.blinkEasing
                         }
@@ -136,14 +136,14 @@ Rectangle {
             ColorAnimation {
                 target: workspace
                 property: "color"
-                to: "red"
+                to: Theme.textColor
                 duration: workspace.blinkDuration
                 easing.type: workspace.blinkEasing
             }
             ColorAnimation {
                 target: workspaceText
                 property: "color"
-                to: Theme.textColor
+                to: Theme.white
                 duration: workspace.blinkDuration
                 easing.type: workspace.blinkEasing
             }
@@ -152,14 +152,14 @@ Rectangle {
             ColorAnimation {
                 target: workspace
                 property: "color"
-                to: Theme.textColor
+                to: Theme.urgent
                 duration: workspace.blinkDuration
                 easing.type: workspace.blinkEasing
             }
             ColorAnimation {
                 targets: workspaceText
                 property: "color"
-                to: "white"
+                to: Theme.textColor
                 duration: workspace.blinkDuration
                 easing.type: workspace.blinkEasing
             }

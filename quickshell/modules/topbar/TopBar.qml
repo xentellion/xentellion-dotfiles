@@ -3,7 +3,6 @@ import Quickshell
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 
 import "clock"
 import "defaultCells"
@@ -111,11 +110,11 @@ Scope {
                                 Idle {}
                                 Wifi {}
                                 Bluetooth {}
+                                Volume {
+                                    spacing: root.spacing
+                                }
                             }
                         }
-                        // Item {
-                        //     implicitWidth: root.spacing
-                        // }
                         Clock {
                             id: timePlate
                             spacing: root.spacing

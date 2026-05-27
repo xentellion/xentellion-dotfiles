@@ -7,7 +7,6 @@ import "../../data"
 
 DefaultCell {
     id: timePlate
-    property bool isHovered: false
     required property int spacing
 
     Layout.preferredWidth: labelLayout.width + spacing * 4

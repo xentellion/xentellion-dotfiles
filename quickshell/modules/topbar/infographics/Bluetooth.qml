@@ -19,7 +19,7 @@ Button {
         anchors.centerIn: parent
         text: {
             let adapter = Bluetooth.defaultAdapter;
-            return "󰂯";
+            return " 󰂯";
         }
         color: network.isActive ? Theme.warning : Theme.white
     }
