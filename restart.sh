@@ -19,7 +19,7 @@ cp -r ~/dotfiles/hypr/* ~/.config/hypr/
 cp ~/dotfiles/kitty/mykitty.conf ~/.config/kitty/mykitty.conf
 
 # nvim
-cp -r ~/dotfiles/neovim ~/.config/neovim
+cp -r ~/dotfiles/nvim ~/.config/
 
 # superfile
 cp -r ~/dotfiles/superfile/* ~/.config/superfile/

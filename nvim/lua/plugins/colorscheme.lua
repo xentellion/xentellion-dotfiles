@@ -1,10 +1,12 @@
 return {
 	{
-		"ellisonleao/gruvbox.nvim",
-		name = "gruvbox",
+		"navarasu/onedark.nvim",
 		priority = 1000,
 		config = function()
-			vim.cmd.colorscheme("gruvbox")
-		end,
+            require("onedark").setup {
+                style='darker'
+            }
+			require("onedark").load()
+		end
 	},
 }

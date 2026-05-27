@@ -1,0 +1,4 @@
+module data
+
+singleton Data 1.0 Data.qml
+singleton Theme 1.0 Theme.qml

@@ -3,15 +3,16 @@ import Quickshell
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
+
 import "clock"
 import "defaultCells"
+import "infographics"
+import "../data"
 
 Scope {
     id: root
 
-    property color cellColor: "#66061840"
-    property color cellBorder: "#44FFFFFF"
-    property color backgroundShadow: "#020024"
     property int spacing: 10
     property int barHeight: 50
 
@@ -42,7 +43,7 @@ Scope {
                 gradient: Gradient {
                     GradientStop {
                         position: 0.0
-                        color: root.backgroundShadow
+                        color: Theme.backgroundShadow
                     }
                     GradientStop {
                         position: 0.9
@@ -94,6 +95,14 @@ Scope {
                             spacing: root.spacing
                             Layout.alignment: Qt.AlignRight
                         }
+                        Item {
+                            implicitWidth: root.spacing
+                        }
+                        Language {
+                            id: languageLayout
+                            spacing: root.spacing
+                            Layout.alignment: Qt.AlignRight
+                        }
                         DefaultCell {
                             id: rightBar
                             Layout.alignment: Qt.AlignRight
@@ -107,6 +116,13 @@ Scope {
                                     centerIn: parent
                                     leftMargin: root.spacing
                                     rightMargin: root.spacing
+                                }
+
+                                Idle {}
+                                // Idle {}
+
+                                Label {
+                                    text: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"
                                 }
                             }
                         }

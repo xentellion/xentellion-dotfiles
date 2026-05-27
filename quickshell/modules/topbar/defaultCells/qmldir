@@ -1,0 +1,4 @@
+module defaultCells
+
+DefaultCell 1.0 DefaultCell.qml
+Workspace 1.0 Workspace.qml

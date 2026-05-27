@@ -18,19 +18,4 @@ Singleton {
         id: clock
         precision: SystemClock.Minutes
     }
-    // Process {
-    //     id: dateProcess
-    //     command: ["date"]
-    //     running: true
-    //     stdout: StdioCollector {
-    //         onStreamFinished: root.time = this.text
-    //     }
-    // }
-
-    // Timer {
-    //     interval: 1000
-    //     running: true
-    //     repeat: true
-    //     onTriggered: dateProcess.running = true
-    // }
 }

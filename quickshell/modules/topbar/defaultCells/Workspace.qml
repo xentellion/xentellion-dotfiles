@@ -2,13 +2,11 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-// import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
-// import Quickshell.Wayland
-import Qt5Compat.GraphicalEffects
+
 import "../../data"
+import "../../effects"
 
 Rectangle {
     id: workspace
@@ -23,9 +21,8 @@ Rectangle {
     property bool isHovered: false
     property bool isUrgent: ws.urgent
 
-    property color bgColor: "#FFFFFF"
-    property color textColor: "#061840"
     property real buttonOpacity: (isHovered || isUrgent) ? 1.0 : isActive ? 0.8 : 0.5
+    property int fontSize: 16
 
     property int activeWidth: 140
     property int inactiveWidth: 70
@@ -52,8 +49,8 @@ Rectangle {
     color: {
         if (typeof ws !== "undefined")
             if (workspace.isUrgent)
-                return "red";
-        return workspace.bgColor;
+                return Theme.urgent;
+        return Theme.white;
     }
 
     RowLayout {
@@ -61,20 +58,14 @@ Rectangle {
         anchors.centerIn: workspace
         spacing: workspace.spacing
 
-        Label {
-            id: workspaceText
-            font.bold: true
-            opacity: 1
-            color: workspace.textColor
-            text: (workspace.ws || workspace.index < workspace.defaultOpen) ? 1 + workspace.index : ""
-
-            layer.enabled: true
-            layer.effect: DropShadow {
-                verticalOffset: 2
-                horizontalOffset: 2
-                color: "#30000000"
-                radius: 1
-                samples: 3
+        Item {
+            Layout.preferredWidth: workspaceText.width
+            LabelDark {
+                id: workspaceText
+                anchors.centerIn: parent
+                opacity: 1
+                text: (workspace.ws || workspace.index < workspace.defaultOpen) ? 1 + workspace.index : ""
+                font.pixelSize: workspace.fontSize
             }
         }
 
@@ -82,11 +73,16 @@ Rectangle {
             id: labelRepeat
             model: workspace.ws.toplevels
 
-            Label {
-                id: classText
+            Item {
+                Layout.preferredWidth: workspaceText.width + workspace.spacing / 2
+
                 required property int index
-                color: workspaceText.color
-                text: workspace.setWorkspaceText(index)
+                LabelDark {
+                    id: classText
+                    font.pixelSize: workspace.fontSize
+                    text: workspace.setWorkspaceText(parent.index)
+                    anchors.centerIn: parent
+                }
             }
         }
     }
@@ -140,7 +136,7 @@ Rectangle {
             ColorAnimation {
                 target: workspaceText
                 property: "color"
-                to: workspace.textColor
+                to: Theme.textColor
                 duration: workspace.blinkDuration
                 easing.type: workspace.blinkEasing
             }
@@ -149,7 +145,7 @@ Rectangle {
             ColorAnimation {
                 target: workspace
                 property: "color"
-                to: workspace.textColor
+                to: Theme.textColor
                 duration: workspace.blinkDuration
                 easing.type: workspace.blinkEasing
             }
@@ -162,7 +158,7 @@ Rectangle {
             }
         }
         onFinished: {
-            workspaceText.color = workspace.textColor;
+            workspaceText.color = Theme.textColor;
         }
     }
 
