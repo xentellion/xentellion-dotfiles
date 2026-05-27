@@ -102,7 +102,7 @@ DefaultCell {
 
     Process {
         id: switchLayoutProcess
-        command: ["hyprctl", "switchxkblayout", "all", "next"]
+        command: ["hyprctl", "switchxkblayout", "current", "next"]
     }
 
     Process {

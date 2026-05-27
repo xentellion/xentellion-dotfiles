@@ -90,14 +90,7 @@ Scope {
                         Item {
                             Layout.fillWidth: true
                         }
-                        Clock {
-                            id: timePlate
-                            spacing: root.spacing
-                            Layout.alignment: Qt.AlignRight
-                        }
-                        Item {
-                            implicitWidth: root.spacing
-                        }
+
                         Language {
                             id: languageLayout
                             spacing: root.spacing
@@ -109,22 +102,24 @@ Scope {
                             Layout.preferredWidth: childrenRect.width + root.spacing * 4
 
                             RowLayout {
-                                spacing: root.spacing
                                 anchors {
                                     top: parent.top
                                     bottom: parent.bottom
                                     centerIn: parent
-                                    leftMargin: root.spacing
-                                    rightMargin: root.spacing
                                 }
 
                                 Idle {}
-                                // Idle {}
-
-                                Label {
-                                    text: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa"
-                                }
+                                Wifi {}
+                                Bluetooth {}
                             }
+                        }
+                        // Item {
+                        //     implicitWidth: root.spacing
+                        // }
+                        Clock {
+                            id: timePlate
+                            spacing: root.spacing
+                            Layout.alignment: Qt.AlignRight
                         }
                     }
                 }

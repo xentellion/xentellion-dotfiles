@@ -15,4 +15,6 @@ Singleton {
     readonly property color textColor: "#061840"
     readonly property color textShadow: "#48061840"
     readonly property color urgent: "red"
+    readonly property color warning: "yellow"
+    readonly property color connected: "green"
 }

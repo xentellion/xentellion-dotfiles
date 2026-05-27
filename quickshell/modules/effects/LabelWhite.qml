@@ -9,11 +9,11 @@ Label {
     id: label
     property bool canHover: false
 
-    property int fontSize: 12
+    property int fontSize: 16
     property int colorChangeDuration: 300
 
     font.family: "RobotoMono Nerd Font"
-    font.pointSize: fontSize
+    font.pixelSize: fontSize
     font.bold: true
     clip: false
     color: Theme.white

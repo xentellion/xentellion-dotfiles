@@ -18,11 +18,10 @@ Rectangle {
 
     property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
     property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
-    property bool isHovered: false
-    property bool isUrgent: ws.urgent
+    property bool isHovered: hoverHandler.hovered
+    property bool isUrgent: ws == undefined ? false : ws.urgent
 
     property real buttonOpacity: (isHovered || isUrgent) ? 1.0 : isActive ? 0.8 : 0.5
-    property int fontSize: 16
 
     property int activeWidth: 140
     property int inactiveWidth: 70
@@ -65,40 +64,56 @@ Rectangle {
                 anchors.centerIn: parent
                 opacity: 1
                 text: (workspace.ws || workspace.index < workspace.defaultOpen) ? 1 + workspace.index : ""
-                font.pixelSize: workspace.fontSize
             }
         }
 
         Repeater {
             id: labelRepeat
-            model: workspace.ws.toplevels
+            model: workspace.ws === undefined ? false : workspace.ws.toplevels
 
             Item {
                 Layout.preferredWidth: workspaceText.width + workspace.spacing / 2
-
                 required property int index
+
                 LabelDark {
                     id: classText
-                    font.pixelSize: workspace.fontSize
                     text: workspace.setWorkspaceText(parent.index)
                     anchors.centerIn: parent
+
+                    SequentialAnimation on color {
+                        loops: Animation.Infinite
+                        running: workspace.isUrgent
+                        ColorAnimation {
+                            target: classText
+                            property: "color"
+                            to: Theme.textColor
+                            duration: workspace.blinkDuration
+                            easing.type: workspace.blinkEasing
+                        }
+                        ColorAnimation {
+                            targets: classText
+                            property: "color"
+                            to: "white"
+                            duration: workspace.blinkDuration
+                            easing.type: workspace.blinkEasing
+                        }
+                        onFinished: {
+                            classText.color = Theme.textColor;
+                        }
+                    }
                 }
             }
         }
     }
 
-    MouseArea {
-        anchors.fill: workspace
-        hoverEnabled: true
-        onEntered: {
-            workspace.isHovered = true;
-        }
-        onExited: {
-            workspace.isHovered = false;
-        }
-        onClicked: {
-            Hyprland.dispatch("workspace " + (workspace.index + 1));
-        }
+    HoverHandler {
+        id: hoverHandler
+        cursorShape: Qt.PointingHandCursor
+    }
+
+    TapHandler {
+        id: tapHandler
+        onTapped: Hyprland.dispatch("workspace " + (workspace.index + 1))
     }
 
     Behavior on Layout.minimumWidth {
@@ -112,14 +127,6 @@ Rectangle {
         OpacityAnimator {
             duration: workspace.sizeChangeDuration
         }
-    }
-
-    function setWorkspaceText(index) {
-        classCollector.running = true;
-        let listArray = workspace.wsTitle.split("\n");
-        if (listArray[index] in Data.symbolImgMap)
-            return Data.symbolImgMap[listArray[index]];
-        return Data.symbolImgMap["default"];
     }
 
     SequentialAnimation on color {
@@ -170,5 +177,13 @@ Rectangle {
                 workspace.wsTitle = this.text.trim();
             }
         }
+    }
+
+    function setWorkspaceText(index) {
+        classCollector.running = true;
+        let listArray = workspace.wsTitle.split("\n");
+        if (listArray[index] in Data.symbolImgMap)
+            return Data.symbolImgMap[listArray[index]];
+        return Data.symbolImgMap["default"];
     }
 }
