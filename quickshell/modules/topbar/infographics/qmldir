@@ -4,6 +4,8 @@ Language 1.0 Language.qml
 Idle 1.0 Idle.qml
 Wifi 1.0 Wifi.qml
 Volume 1.0 Volume.qml
+Battery 1.0 Battery.qml
 Bluetooth 1.0 Bluetooth.qml
+Microphone 1.0 Microphone.qml
 
 singleton LayoutService 1.0 LayoutService.qml

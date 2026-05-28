@@ -44,7 +44,7 @@ Button {
                                 return " 󰤢";
                             return " 󰤟";
                         }
-                    } else {
+                    } else if (connectivity == NetworkConnectivity.Limited) {
                         if (device.state == ConnectionState.Connected) {
                             if (network > 0.75)
                                 return " 󰤩";
@@ -56,11 +56,10 @@ Button {
                         }
                     }
                 } else if (device.type == DeviceType.Wired) {
-                    return "";
+                    return " ";
                 }
-                return "󰛵";
             }
-            return "󰛵";
+            return " ";
         }
     }
 

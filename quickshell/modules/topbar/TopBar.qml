@@ -113,7 +113,13 @@ Scope {
                                 Volume {
                                     spacing: root.spacing
                                 }
+                                Microphone {}
                             }
+                        }
+                        Battery {
+                            id: battery
+                            spacing: root.spacing
+                            Layout.alignment: Qt.AlignRight
                         }
                         Clock {
                             id: timePlate

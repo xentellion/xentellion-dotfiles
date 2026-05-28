@@ -11,6 +11,7 @@ Singleton {
     readonly property color cellColor: "#66061840"
     readonly property color cellHighlight: "#96061840"
     readonly property color cellBorder: "#44FFFFFF"
+    readonly property color paleBackground: "#bdbebf"
 
     readonly property color textColor: "#061840"
     readonly property color textShadow: "#48061840"

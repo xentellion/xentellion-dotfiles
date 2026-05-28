@@ -10,7 +10,9 @@ import "../../data"
 RowLayout {
     id: volumeTab
     readonly property var audioProps: Pipewire.defaultAudioSink?.audio
-    readonly property int animationTime: 200
+    readonly property int animationDuration: 200
+    readonly property int sliderDuration: 2000
+
     property bool sliderVisible: false
 
     spacing: sliderVisible ? spacing : 0
@@ -50,7 +52,7 @@ RowLayout {
         TapHandler {
             id: rmb
             acceptedButtons: Qt.RightButton
-            onTapped: volumeTab.sliderVisible = !volumeTab.sliderVisible
+            onTapped: volumeTab.showSiderTemporarily()
         }
 
         HoverHandler {
@@ -77,23 +79,71 @@ RowLayout {
             }
         }
 
-        handle: null
+        handle: Rectangle {
+            x: volumeSlider.leftPadding + volumeSlider.visualPosition * (volumeSlider.availableWidth - width)
+            y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2
+            implicitWidth: 5
+            implicitHeight: 15
+            radius: 1
+            color: Theme.white
+            border.color: Theme.textColor
+        }
+
+        background: Rectangle {
+            x: volumeSlider.leftPadding
+            y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2
+            implicitWidth: 200
+            implicitHeight: 4
+            width: volumeSlider.availableWidth
+            height: implicitHeight
+            radius: 2
+            color: Theme.paleBackground
+
+            Rectangle {
+                width: volumeSlider.visualPosition * parent.width
+                height: parent.height
+                color: Theme.white
+                radius: 2
+            }
+        }
 
         Behavior on Layout.preferredWidth {
             NumberAnimation {
-                duration: volumeTab.animationTime
+                duration: volumeTab.animationDuration
             }
         }
 
         Behavior on opacity {
             NumberAnimation {
-                duration: volumeTab.animationTime
+                duration: volumeTab.animationDuration
             }
+        }
+    }
+
+    Connections {
+        target: volumeTab.audioProps === undefined ? null : volumeTab.audioProps
+
+        function onVolumeChanged() {
+            volumeTab.showSiderTemporarily();
+        }
+    }
+
+    Timer {
+        id: hideTimer
+        interval: volumeTab.sliderDuration
+        repeat: false
+        onTriggered: {
+            volumeTab.sliderVisible = false;
         }
     }
 
     Process {
         id: switchMute
         command: ["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]
+    }
+
+    function showSiderTemporarily() {
+        volumeTab.sliderVisible = true;
+        hideTimer.restart();
     }
 }
