@@ -110,10 +110,8 @@ Scope {
                                 Idle {}
                                 Wifi {}
                                 Bluetooth {}
-                                Volume {
-                                    spacing: root.spacing
-                                }
                                 Microphone {}
+                                Volume {}
                             }
                         }
                         Battery {

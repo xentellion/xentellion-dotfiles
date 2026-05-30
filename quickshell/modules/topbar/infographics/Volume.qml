@@ -15,8 +15,6 @@ RowLayout {
 
     property bool sliderVisible: false
 
-    spacing: sliderVisible ? spacing : 0
-
     PwObjectTracker {
         objects: [Pipewire.defaultAudioSink]
     }
@@ -34,25 +32,25 @@ RowLayout {
 
             text: {
                 if (volumeTab.audioProps?.muted) {
-                    return " ";
+                    return "";
                 }
                 if (volumeTab.audioProps?.volume > 0.50) {
-                    return " ";
+                    return "";
                 }
-                return " ";
+                return "";
             }
         }
 
         TapHandler {
             id: lmb
             acceptedButtons: Qt.LeftButton
-            onTapped: switchMute.running = true
+            onTapped: volumeTab.showSiderTemporarily()
         }
 
         TapHandler {
             id: rmb
             acceptedButtons: Qt.RightButton
-            onTapped: volumeTab.showSiderTemporarily()
+            onTapped: switchMute.running = true
         }
 
         HoverHandler {

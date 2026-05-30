@@ -24,7 +24,7 @@ Button {
         canHover: true
         anchors.centerIn: parent
         text: {
-            return " ";
+            return "";
         }
         color: Theme.warning
     }

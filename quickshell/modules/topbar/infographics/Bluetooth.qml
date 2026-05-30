@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Io
 import Quickshell.Bluetooth
@@ -11,6 +12,7 @@ Button {
     property bool isActive: Bluetooth.defaultAdapter != null
     background: null
     checkable: true
+    Layout.preferredWidth: label.implicitWidth + spacing * 2
 
     LabelWhite {
         id: label
@@ -19,7 +21,7 @@ Button {
         anchors.centerIn: parent
         text: {
             let adapter = Bluetooth.defaultAdapter;
-            return " 󰂯";
+            return "󰂯";
         }
         color: network.isActive ? Theme.warning : Theme.white
     }
