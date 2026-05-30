@@ -58,7 +58,17 @@ Scope {
                         DefaultCell {
                             id: leftBar
                             Layout.alignment: Qt.AlignLeft
-                            Layout.preferredWidth: 200
+                            Layout.preferredWidth: childrenRect.width + root.spacing * 4
+
+                            RowLayout {
+                                spacing: root.spacing * 2
+                                anchors {
+                                    centerIn: parent
+                                }
+
+                                Menu {}
+                                WindowInfo {}
+                            }
                         }
                         Item {
                             Layout.fillWidth: true
