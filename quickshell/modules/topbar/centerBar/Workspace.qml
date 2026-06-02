@@ -5,8 +5,8 @@ import QtQuick.Layouts
 import Quickshell.Io
 import Quickshell.Hyprland
 
-import "../../data"
-import "../../effects"
+import "../../../config"
+import "../../../components"
 
 Rectangle {
     id: workspace

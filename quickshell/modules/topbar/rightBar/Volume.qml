@@ -4,14 +4,16 @@ import QtQuick.Layouts
 import Quickshell.Io
 import Quickshell.Services.Pipewire
 
-import "../../effects"
-import "../../data"
+import "../../../config"
+import "../../../components"
 
 RowLayout {
     id: volumeTab
     readonly property var audioProps: Pipewire.defaultAudioSink?.audio
     readonly property int animationDuration: 200
     readonly property int sliderDuration: 2000
+
+    property bool silentBoot: false // Used to hide slider on quickshell boot
 
     property bool sliderVisible: false
 
@@ -34,10 +36,7 @@ RowLayout {
                 if (volumeTab.audioProps?.muted) {
                     return "";
                 }
-                if (volumeTab.audioProps?.volume > 0.50) {
-                    return "";
-                }
-                return "";
+                return volumeTab.audioProps?.volume > 0.50 ? "" : "";
             }
         }
 
@@ -120,8 +119,11 @@ RowLayout {
 
     Connections {
         target: volumeTab.audioProps === undefined ? null : volumeTab.audioProps
-
         function onVolumeChanged() {
+            if (!volumeTab.silentBoot) {
+                volumeTab.silentBoot = true;
+                return;
+            }
             volumeTab.showSiderTemporarily();
         }
     }

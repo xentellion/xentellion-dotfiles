@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 
-import "../../data"
+import "../config"
 
 Rectangle {
     property int colorChangeDuration: 300

@@ -3,7 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell.Hyprland
 
-import "../../data"
+import "../config"
 
 QtObject {
     id: titleService
@@ -12,8 +12,6 @@ QtObject {
     property int maxLength: 30
 
     function parseLayout(fullLayoutName) {
-        console.log(fullLayoutName);
-        console.log(typeof (fullLayoutName));
         if (fullLayoutName === "") {
             text = Data.getQuote();
             return;

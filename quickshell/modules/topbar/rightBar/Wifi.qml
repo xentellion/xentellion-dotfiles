@@ -4,7 +4,7 @@ import QtQuick.Controls
 import Quickshell.Io
 import Quickshell.Networking
 
-import "../../effects"
+import "../../../components"
 
 Button {
     id: network

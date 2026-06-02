@@ -1,4 +1,3 @@
 module notifications
 
-singleton NotificationServer 1.0 NotificationServer.qml
 NotificationPopUp 1.0 NotificationPopUp.qml

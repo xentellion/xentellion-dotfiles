@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 
-import "../data"
+import "../config"
 
 MultiEffect {
     shadowEnabled: true

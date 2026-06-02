@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 
-import "../data"
+import "../config"
 
 LabelWhite {
     id: label

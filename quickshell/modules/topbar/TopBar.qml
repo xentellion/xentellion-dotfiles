@@ -4,10 +4,11 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
-import "clock"
-import "defaultCells"
-import "infographics"
-import "../data"
+import "../../config"
+import "../../components"
+import "leftBar"
+import "centerBar"
+import "rightBar"
 
 Scope {
     id: root

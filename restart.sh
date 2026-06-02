@@ -30,9 +30,5 @@ cp -r ~/dotfiles/swaync/* ~/.config/swaync/
 # quickshell
 cp -r ~/dotfiles/quickshell/* ~/.config/quickshell/
 
-# restart
-pkill waybar 
-waybar & disown
-
 swaync-client -R -rs & notify-send -i ~/.config/swaync/icons/image.png "UI reload complete"
 

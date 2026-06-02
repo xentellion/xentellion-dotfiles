@@ -1,0 +1,7 @@
+module services
+
+singleton LayoutService 1.0 LayoutService.qml
+singleton TitleService 1.0 TitleService.qml
+singleton TimeService 1.0 TimeService.qml
+singleton NotificationServer 1.0 NotificationServer.qml
+

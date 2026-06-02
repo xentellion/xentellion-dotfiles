@@ -3,10 +3,8 @@ import QtQuick.Layouts
 import Quickshell.Io
 import Quickshell.Services.UPower
 
-import "../../data"
-import "../../effects"
-import "../../notifications"
-import "../defaultCells"
+import "../../../config"
+import "../../../components"
 
 DefaultCell {
     id: battery

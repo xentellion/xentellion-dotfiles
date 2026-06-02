@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell.Io
 
-import "../defaultCells"
-import "../../data"
-import "../../effects"
+import "../../../config"
+import "../../../components"
+import "../../../services"
 
 DefaultCell {
     id: lang

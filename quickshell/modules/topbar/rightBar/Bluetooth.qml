@@ -4,8 +4,8 @@ import QtQuick.Controls
 import Quickshell.Io
 import Quickshell.Bluetooth
 
-import "../../effects"
-import "../../data"
+import "../../../config"
+import "../../../components"
 
 Button {
     id: network

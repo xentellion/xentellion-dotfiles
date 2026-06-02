@@ -1,7 +1,8 @@
 import QtQuick.Controls
 import QtQuick
 import Quickshell.Wayland
-import "../../effects"
+
+import "../../../components"
 
 Button {
     id: idler

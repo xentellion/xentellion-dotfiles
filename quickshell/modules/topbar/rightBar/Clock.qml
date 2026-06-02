@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 
-import "../defaultCells"
-import "../../effects"
-import "../../data"
+import "../../../config"
+import "../../../components"
+import "../../../services"
 
 DefaultCell {
     id: timePlate
@@ -22,7 +22,7 @@ DefaultCell {
             Layout.preferredWidth: hoverHandler.hovered ? implicitWidth : 0
             clip: true
             color: "transparent"
-            text: Time.datetime
+            text: TimeService.datetime
 
             Behavior on Layout.preferredWidth {
                 NumberAnimation {
@@ -33,7 +33,7 @@ DefaultCell {
 
         LabelWhite {
             id: timeLabel
-            text: Time.time
+            text: TimeService.time
         }
     }
 

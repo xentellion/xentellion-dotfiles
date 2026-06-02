@@ -52,7 +52,7 @@ class Controller(Widget.RevealerWindow):
         # )
 
         revealer = Widget.Revealer(
-            transition_type="slide_left",
+            transition_type="slide_right",
             child=Widget.Box(
                 child=[
                     Widget.Box(
@@ -80,7 +80,7 @@ class Controller(Widget.RevealerWindow):
             visible=False,
             popup=True,
             layer="top",
-            anchor=["top", "right", "bottom", "left"],
+            anchor=["top", "left"],
             namespace="revealer-controller",
             child=Widget.Box(
                 child=[

@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Services.Pipewire
 
-import "../../data"
-import "../../effects"
+import "../../../config"
+import "../../../components"
 
 Button {
     id: micro
