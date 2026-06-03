@@ -1,11 +1,9 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
-import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 
 import "../../config"
 import "../../components"
@@ -29,109 +27,111 @@ Scope {
     readonly property int animationsDuration: 173
     readonly property int animationsEasing: Easing.Linear
     readonly property int sliderDuration: 3000
+    readonly property int visibilityState: States.menuOpen
 
-    PanelWindow {
-        id: powermenu
+    LazyLoader {
+        id: lazySidebar
+        loading: true
+        PanelWindow {
+            id: powermenu
 
-        implicitHeight: screen.height
-        implicitWidth: powermenuBase.width
+            implicitHeight: screen.height
+            implicitWidth: powermenuBase.width
 
-        exclusionMode: ExclusionMode.Normal
-        // exclusionMode: States.menuOpen ? ExclusionMode.Auto : ExclusionMode.Normal
-        // aboveWindows: false
+            exclusionMode: ExclusionMode.Normal
+            aboveWindows: false
 
-        color: "transparent"
+            color: "transparent"
 
-        anchors {
-            top: true
-            bottom: true
-            left: true
-        }
-
-        Item {
-            id: box
-            width: powermenu.width
-            x: -width
-
-            MarginWrapperManager {
-                topMargin: powermenuBase.margin
-                leftMargin: powermenuBase.margin
-                rightMargin: powermenuBase.margin
-                bottomMargin: powermenuBase.margin
+            anchors {
+                top: true
+                bottom: true
+                left: true
             }
 
             Item {
-                ColumnLayout {
-                    anchors.fill: parent
-                    spacing: powermenuBase.windowSpacing
+                id: box
+                width: powermenu.width
+                x: -width
 
-                    TopLevel {
-                        spacing: powermenuBase.spacing
-                    }
-                    SideCell {
-                        Layout.preferredHeight: childrenRect.height + powermenuBase.spacing
-                        LabelWhite {
-                            anchors.centerIn: parent
-                            text: "LMAO"
-                        }
-                    }
+                MarginWrapperManager {
+                    topMargin: powermenuBase.margin
+                    leftMargin: powermenuBase.margin
+                    rightMargin: powermenuBase.margin
+                    bottomMargin: powermenuBase.margin
                 }
-            }
 
-            states: [
-                State {
-                    name: "opened"
-                    when: States.menuOpen
-                    PropertyChanges {
-                        box {
-                            x: 0
+                Item {
+                    ColumnLayout {
+                        anchors.fill: parent
+                        spacing: powermenuBase.windowSpacing
+
+                        TopLevel {
+                            spacing: powermenuBase.spacing
                         }
-                    }
-                }
-            ]
-
-            transitions: [
-                Transition {
-                    from: ""
-                    to: "opened"
-                    reversible: true
-                    SequentialAnimation {
-                        ScriptAction {
-                            script: {
-                                console.log(powermenu.aboveWindows + " " + States.menuOpen);
-                                powermenu.aboveWindows = States.menuOpen;
+                        SideCell {
+                            Layout.preferredHeight: childrenRect.height + powermenuBase.spacing
+                            LabelWhite {
+                                anchors.centerIn: parent
+                                text: "LMAO"
                             }
                         }
-                        NumberAnimation {
-                            target: box
-                            properties: "x"
-                            duration: powermenuBase.animationsDuration
-                            easing.type: powermenuBase.animationsEasing
-                        }
                     }
                 }
-            ]
-        }
 
-        HoverHandler {
-            id: hoverHandler
-            // cursorShape: Qt.PointingHandCursor
-            onHoveredChanged: {
-                if (hovered) {
-                    hideTimer.stop();
-                } else {
-                    hideTimer.start();
-                }
+                states: [
+                    State {
+                        name: "opened"
+                        when: States.menuOpen
+                        PropertyChanges {
+                            box {
+                                x: 0
+                            }
+                        }
+                    }
+                ]
+
+                transitions: [
+                    Transition {
+                        from: ""
+                        to: "opened"
+                        reversible: true
+                        SequentialAnimation {
+                            ScriptAction {
+                                script: {
+                                    powermenu.aboveWindows = States.menuOpen;
+                                }
+                            }
+                            NumberAnimation {
+                                target: box
+                                properties: "x"
+                                duration: powermenuBase.animationsDuration
+                                easing.type: powermenuBase.animationsEasing
+                            }
+                        }
+                    }
+                ]
             }
         }
+    }
 
-        Timer {
-            id: hideTimer
-            interval: powermenuBase.sliderDuration
-            repeat: false
-            onTriggered: {
-                States.menuOpen = false;
+    HoverHandler {
+        id: hoverHandler
+        onHoveredChanged: {
+            if (hovered) {
+                hideTimer.stop();
+            } else {
+                hideTimer.start();
             }
+        }
+    }
+
+    Timer {
+        id: hideTimer
+        interval: powermenuBase.sliderDuration
+        repeat: false
+        onTriggered: {
+            States.menuOpen = false;
         }
     }
 }

@@ -14,6 +14,7 @@ Scope {
     id: topbarBase
 
     property int spacing: 10
+    property int margin: 5
     property int barHeight: 50
 
     Variants {
@@ -37,7 +38,7 @@ Scope {
                 anchors.fill: parent
 
                 MarginWrapperManager {
-                    margin: 5
+                    margin: topbarBase.margin
                 }
 
                 gradient: Gradient {
@@ -72,17 +73,21 @@ Scope {
                             }
                         }
                         Item {
+                            id: leftSpacer
+                            // property real trueCenterLeft: (topbar.width - workspaceBar.width) / 2
+                            // property real rightPushLeft: leftBar.x + workspaceBar.width - topbarBase.spacing
+                            // Layout.maximumWidth: Math.min(trueCenterLeft, rightPushLeft) - leftBar.width + topbarBase.spacing
                             Layout.fillWidth: true
                         }
                         DefaultCell {
                             id: workspaceBar
-                            Layout.preferredWidth: childrenRect.width + 9 * 2
 
-                            Layout.alignment: Qt.AlignLeft
+                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 2
+                            radius: Math.floor(height / 2)
 
                             RowLayout {
-                                spacing: topbarBase.spacing
                                 anchors.centerIn: parent
+                                spacing: topbarBase.spacing
 
                                 Repeater {
                                     Layout.alignment: Qt.AlignCenter
@@ -96,9 +101,9 @@ Scope {
                             }
                         }
                         Item {
+                            id: rightShift
                             Layout.fillWidth: true
                         }
-
                         Language {
                             id: languageLayout
                             spacing: topbarBase.spacing
@@ -107,7 +112,7 @@ Scope {
                         DefaultCell {
                             id: rightBar
                             Layout.alignment: Qt.AlignRight
-                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 4
+                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 8
 
                             RowLayout {
                                 anchors {

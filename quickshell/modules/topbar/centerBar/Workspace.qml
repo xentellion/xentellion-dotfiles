@@ -35,7 +35,7 @@ Rectangle {
     property string wsTitle: ""
 
     Layout.minimumWidth: isActive ? activeWidth : inactiveWidth
-    Layout.minimumHeight: barHeight / 2
+    Layout.minimumHeight: Math.floor(barHeight / 2)
     Layout.preferredWidth: winLayout.width + spacing * 2
 
     visible: ws || (index < defaultOpen)
@@ -43,7 +43,7 @@ Rectangle {
 
     layer.enabled: true
 
-    radius: workspace.height / 2
+    radius: Math.floor(workspace.height / 2)
 
     color: {
         if (typeof ws !== "undefined")
@@ -72,7 +72,7 @@ Rectangle {
             model: workspace.ws === undefined ? false : workspace.ws.toplevels
 
             Item {
-                Layout.preferredWidth: workspaceText.width + workspace.spacing / 2
+                Layout.preferredWidth: workspaceText.width + Math.floor(workspace.spacing / 2)
                 required property int index
 
                 LabelDark {
@@ -123,11 +123,12 @@ Rectangle {
         }
     }
 
-    Behavior on opacity {
-        OpacityAnimator {
-            duration: workspace.sizeChangeDuration
-        }
-    }
+    // This shit was eating performance
+    // Behavior on opacity {
+    //     OpacityAnimator {
+    //         duration: workspace.sizeChangeDuration
+    //     }
+    // }
 
     SequentialAnimation on color {
         loops: Animation.Infinite

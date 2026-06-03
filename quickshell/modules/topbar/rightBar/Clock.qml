@@ -22,6 +22,7 @@ DefaultCell {
             Layout.preferredWidth: hoverHandler.hovered ? implicitWidth : 0
             clip: true
             color: "transparent"
+            isClickable: false
             text: TimeService.datetime
 
             Behavior on Layout.preferredWidth {
@@ -33,6 +34,7 @@ DefaultCell {
 
         LabelWhite {
             id: timeLabel
+            isClickable: false
             text: TimeService.time
         }
     }

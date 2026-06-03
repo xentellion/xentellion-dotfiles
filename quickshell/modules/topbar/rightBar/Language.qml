@@ -69,6 +69,10 @@ DefaultCell {
         }
     }
 
+    Component.onCompleted: {
+        Layout.preferredWidth = Layout.preferredWidth;
+    }
+
     states: State {
         name: "capsOn"
         when: lang.capsVisible == true

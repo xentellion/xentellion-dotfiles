@@ -27,7 +27,9 @@ Button {
     }
 
     TapHandler {
-        onTapped: openNetworkGui.running = true
+        onTapped: {
+            openNetworkGui.running = true;
+        }
     }
 
     Process {

@@ -107,6 +107,8 @@ DefaultCell {
     LabelWhite {
         id: label
         canHover: false
+        isClickable: false
+
         anchors.centerIn: parent
 
         text: {
