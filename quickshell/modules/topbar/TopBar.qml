@@ -11,7 +11,7 @@ import "centerBar"
 import "rightBar"
 
 Scope {
-    id: root
+    id: topbarBase
 
     property int spacing: 10
     property int barHeight: 50
@@ -25,7 +25,7 @@ Scope {
             color: "transparent"
 
             implicitWidth: screen.width
-            implicitHeight: root.barHeight
+            implicitHeight: topbarBase.barHeight
 
             anchors {
                 top: true
@@ -53,16 +53,16 @@ Scope {
 
                 Item {
                     RowLayout {
-                        spacing: root.spacing
+                        spacing: topbarBase.spacing
                         anchors.fill: parent
 
                         DefaultCell {
                             id: leftBar
                             Layout.alignment: Qt.AlignLeft
-                            Layout.preferredWidth: childrenRect.width + root.spacing * 4
+                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 4
 
                             RowLayout {
-                                spacing: root.spacing * 2
+                                spacing: topbarBase.spacing * 2
                                 anchors {
                                     centerIn: parent
                                 }
@@ -81,18 +81,16 @@ Scope {
                             Layout.alignment: Qt.AlignLeft
 
                             RowLayout {
-                                spacing: root.spacing
-                                anchors {
-                                    centerIn: parent
-                                }
+                                spacing: topbarBase.spacing
+                                anchors.centerIn: parent
 
                                 Repeater {
                                     Layout.alignment: Qt.AlignCenter
                                     model: 10
                                     Workspace {
                                         defaultOpen: 5
-                                        spacing: root.spacing
-                                        barHeight: root.barHeight
+                                        spacing: topbarBase.spacing
+                                        barHeight: topbarBase.barHeight
                                     }
                                 }
                             }
@@ -103,13 +101,13 @@ Scope {
 
                         Language {
                             id: languageLayout
-                            spacing: root.spacing
+                            spacing: topbarBase.spacing
                             Layout.alignment: Qt.AlignRight
                         }
                         DefaultCell {
                             id: rightBar
                             Layout.alignment: Qt.AlignRight
-                            Layout.preferredWidth: childrenRect.width + root.spacing * 4
+                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 4
 
                             RowLayout {
                                 anchors {
@@ -127,12 +125,12 @@ Scope {
                         }
                         Battery {
                             id: battery
-                            spacing: root.spacing
+                            spacing: topbarBase.spacing
                             Layout.alignment: Qt.AlignRight
                         }
                         Clock {
                             id: timePlate
-                            spacing: root.spacing
+                            spacing: topbarBase.spacing
                             Layout.alignment: Qt.AlignRight
                         }
                     }

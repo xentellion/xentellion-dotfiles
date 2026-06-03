@@ -2,6 +2,8 @@ import QtQuick
 import Quickshell.Io
 import QtQuick.Controls
 
+import "../../../config"
+
 Button {
     // anchors.centerIn: parent
     background: null
@@ -18,7 +20,15 @@ Button {
     }
 
     TapHandler {
+        id: lmb
+        acceptedButtons: Qt.RightButton
         onTapped: menuer.running = true
+    }
+
+    TapHandler {
+        id: rmb
+        acceptedButtons: Qt.LeftButton
+        onTapped: States.menuOpen = !States.menuOpen
     }
 
     Process {

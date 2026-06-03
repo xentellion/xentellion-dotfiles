@@ -1,6 +1,8 @@
 module components
 
 DefaultCell 1.0 DefaultCell.qml
+SideCell 1.0 SideCell.qml
+MenuCell 1.0 MenuCell.qml
 LabelDark 1.0 LabelDark.qml
 LabelWhite 1.0 LabelWhite.qml
 TextLight 1.0 TextLight.qml
