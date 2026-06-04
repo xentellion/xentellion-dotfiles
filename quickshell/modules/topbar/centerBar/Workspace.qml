@@ -72,7 +72,7 @@ Rectangle {
             model: workspace.ws === undefined ? false : workspace.ws.toplevels
 
             Item {
-                Layout.preferredWidth: workspaceText.width + Math.floor(workspace.spacing / 2)
+                Layout.preferredWidth: classText.width
                 required property int index
 
                 LabelDark {

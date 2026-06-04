@@ -6,6 +6,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import "../../config"
+import "firstBlock"
 import "../../components"
 
 Scope {

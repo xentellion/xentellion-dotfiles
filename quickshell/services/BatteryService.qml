@@ -16,23 +16,19 @@ Singleton {
     readonly property string timeLongTemplate: " in %1 h %2 min"
     readonly property string timeShortTemplate: " in %1 min"
 
-    readonly property string timeToEmpty: "Empty" + getTimeUntil(UPower.displayDevice?.timeToEmpty)
-    readonly property string timeToFull: "Full" + getTimeUntil(UPower.displayDevice?.timeToFull)
+    readonly property var battery: UPower.displayDevice
 
-    readonly property string batteryTemplate: "Battery level is at %1%!"
-    readonly property var batteryLevel: ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹", "󰁹"]
-    readonly property string batteryEmpty: "󰂎"
-    readonly property string pluggedIcon: ""
-    readonly property string chargingIcon: "󱐋"
+    readonly property string timeToEmpty: "Empty" + getTimeUntil(battery?.timeToEmpty)
+    readonly property string timeToFull: "Full" + getTimeUntil(battery?.timeToFull)
 
     readonly property var assets: {
         "warning": Qt.resolvedUrl("../../../assets/icons/warning.png"),
         "danger": Qt.resolvedUrl("../../../assets/icons/danger.png")
     }
 
-    property real percentage: Math.floor(UPower.displayDevice?.percentage * 100)
+    property real percentage: Math.floor(battery?.percentage * 100)
     property bool isCharging: !UPower.onBattery
-    property bool isLaptop: UPower.displayDevice?.isLaptopBattery
+    property bool isLaptop: battery?.isLaptopBattery
 
     property bool isWarningSent: false
     property bool isDangerSent: false
@@ -57,47 +53,46 @@ Singleton {
     }
 
     readonly property string icon: {
-        if (!UPower.displayDevice.ready) {
-            return batteryEmpty;
+        if (!battery.ready) {
+            return Data.batteryEmpty;
         }
-        console.log("Request");
-        let icon = batteryLevel[Math.floor(percentage / 10)];
+        // Hell yeah, independent form magical amount of icons in array
+        let icon = Data.batteryLevel[Math.min(Math.floor(percentage / Data.batteryLevel.length), Data.batteryLevel.length - 1)];
         let connection = null;
-        console.log(UPower.displayDevice?.state);
-        switch (UPower.displayDevice?.state) {
+        switch (battery?.state) {
         case 1:
-            connection = chargingIcon;
+            connection = Data.chargingIcon;
             break;
         case 4:
-            connection = `<font color="${Theme.warning}">${chargingIcon}</font>`;
+            connection = `<font color="${Theme.warning}">${Data.chargingIcon}</font>`;
             break;
         case 5:
-            connection = pluggedIcon;
+            connection = Data.pluggedIcon;
             break;
         case 6:
-            connection = pluggedIcon;
+            connection = Data.pluggedIcon;
             break;
         default:
             connection = "";
             break;
         }
         connection += " ";
-        return (icon !== undefined ? icon : batteryEmpty) + connection + percentage + "%";
+        return (icon !== undefined ? icon : Data.batteryEmpty) + connection + percentage + "%";
     }
 
     onPercentageChanged: {
-        if (!UPower.displayDevice?.ready)
+        if (!battery?.ready)
             return;
         checkBatteryState();
     }
 
     onIsChargingChanged: {
-        if (!UPower.displayDevice?.ready)
+        if (!battery?.ready)
             return;
         if (isCharging) {
             isDangerSent = false;
             isWarningSent = false;
-            restoreScreen.running = true;
+            BrightnessService.restoreScreen.running = true;
         } else {
             checkBatteryState();
         }
@@ -119,7 +114,7 @@ Singleton {
             isDangerSent = true;
             isWarningSent = true;
             console.log("DANGER");
-            dimScreen.running = true;
+            BrightnessService.dimScreen.running = true;
             break;
         default:
             if (isDangerSent || isWarningSent) {
@@ -139,23 +134,21 @@ Singleton {
         return 0;
     }
 
+    readonly property var shutdown: Process {
+        command: ["shutdown", "now"]
+    }
+
+    readonly property var reboot: Process {
+        command: ["reboot"]
+    }
+
     Process {
         id: warningSend
-        command: ["notify-send", "-u", "critical", "-i", root.assets["warning"], "Battery low", root.batteryTemplate.arg(root.percentage)]
+        command: ["notify-send", "-u", "critical", "-i", root.assets["warning"], "Battery low", Data.batteryTemplate.arg(root.percentage)]
     }
 
     Process {
         id: dangerSend
-        command: ["notify-send", "-u", "critical", "-i", root.assets["danger"], "Battery is CRITICALLY low!", root.batteryTemplate.arg(root.percentage)]
-    }
-
-    Process {
-        id: dimScreen
-        command: ["brightnessctl", "--save", "set", "10%"]
-    }
-
-    Process {
-        id: restoreScreen
-        command: ["brightnessctl", "--restore"]
+        command: ["notify-send", "-u", "critical", "-i", root.assets["danger"], "Battery is CRITICALLY low!", Data.batteryTemplate.arg(root.percentage)]
     }
 }

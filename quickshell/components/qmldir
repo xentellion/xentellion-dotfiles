@@ -7,3 +7,4 @@ LabelDark 1.0 LabelDark.qml
 LabelWhite 1.0 LabelWhite.qml
 TextLight 1.0 TextLight.qml
 TextShadow 1.0 TextShadow.qml
+StyleSlider 1.0 StyleSlider.qml

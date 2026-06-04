@@ -4,15 +4,12 @@ import QtQuick.Controls
 import Quickshell.Io
 import Quickshell.Networking
 
+import "../../../config"
 import "../../../components"
 
 Button {
     id: network
     property bool isVisible: true
-    property var wifiConnected: ["󰤟", "󰤢", "󰤥", "󰤨"]
-    property var wifiLimited: ["󰤠", "󰤣", "󰤦", "󰤩"]
-    property string wifiConnecting: "󰤯"
-    property string wifiUnknown: "󰤮"
 
     Layout.preferredWidth: label.implicitWidth + spacing * 2
 
@@ -35,25 +32,25 @@ Button {
 
                 if (device.type == DeviceType.Wifi) {
                     if (device.state == ConnectionState.Connecting || device.state == ConnectionState.Disconnecting) {
-                        result.push(network.wifiConnecting);
+                        result.push(Data.wifiConnecting);
                         continue;
                     }
                     if (device.networks.values[0] === undefined) {
-                        result.push(network.wifiUnknown);
+                        result.push(Data.wifiUnknown);
                         continue;
                     }
                     let strength = device.networks.values[0].signalStrength;
                     if (connectivity == NetworkConnectivity.Full) {
-                        result.push(network.wifiConnected[Math.floor(strength / 0.25)]);
+                        result.push(Data.wifiConnected[Math.floor(strength / 0.25)]);
                     } else if (connectivity == NetworkConnectivity.Limited) {
-                        result.push(network.wifiLimited[Math.floor(strength / 0.25)]);
+                        result.push(Data.wifiLimited[Math.floor(strength / 0.25)]);
                     }
                 } else if (device.type == DeviceType.Wired) {
-                    result.push("");
+                    result.push(Data.wired);
                 }
             }
             if (result.length == 0) {
-                result.push("");
+                result.push(Data.noNetwork);
             }
             return result.join("  ");
         }
