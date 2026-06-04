@@ -43,13 +43,17 @@ RowLayout {
         TapHandler {
             id: lmb
             acceptedButtons: Qt.LeftButton
-            onTapped: volumeTab.showSiderTemporarily()
+            onTapped: {
+                volumeTab.showSiderTemporarily();
+            }
         }
 
         TapHandler {
             id: rmb
             acceptedButtons: Qt.RightButton
-            onTapped: switchMute.running = true
+            onTapped: {
+                switchMute.running = true;
+            }
         }
 
         HoverHandler {

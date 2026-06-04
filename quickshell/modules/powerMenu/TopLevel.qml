@@ -6,6 +6,7 @@ import QtQuick.Layouts
 import Quickshell.Io
 
 import "../../config"
+import "../../services"
 import "../../components"
 
 SideCell {
@@ -26,7 +27,7 @@ SideCell {
 
             MenuCell {
                 spacing: root.spacing
-                text: "LOL"
+                text: `${BatteryService.icon} ${BatteryService.isCharging ? BatteryService.timeToFull : BatteryService.timeToEmpty}`
             }
             Item {
                 Layout.fillWidth: true
@@ -34,7 +35,8 @@ SideCell {
             MenuCell {
                 id: rebootButton
                 spacing: root.spacing
-                // isSquare: true
+                isSquare: true
+                isClickable: true
                 text: ""
 
                 TapHandler {
@@ -46,7 +48,8 @@ SideCell {
             MenuCell {
                 id: shutdownButton
                 spacing: root.spacing
-                // isSquare: true
+                isSquare: true
+                isClickable: true
                 text: ""
 
                 TapHandler {

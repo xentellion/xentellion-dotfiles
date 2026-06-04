@@ -112,7 +112,7 @@ Scope {
                         DefaultCell {
                             id: rightBar
                             Layout.alignment: Qt.AlignRight
-                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 8
+                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 3
 
                             RowLayout {
                                 anchors {

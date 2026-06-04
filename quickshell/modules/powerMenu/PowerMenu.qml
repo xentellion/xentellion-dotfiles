@@ -12,21 +12,14 @@ Scope {
     id: powermenuBase
 
     readonly property int width: 400
-    readonly property int margin: 5
+    readonly property int margin: 10
     readonly property int spacing: 10
     readonly property int windowSpacing: 5
 
-    readonly property var hyperAnimations: {
-        "easeOutQuint": [0.23, 1, 0.32, 1],
-        "easeInOutCubic": [0.65, 0.05, 0.36, 1],
-        "linear": [0, 0, 1, 1],
-        "almostLinear": [0.5, 0.5, 0.75, 1.0],
-        "quick": [0.15, 0, 0.1, 1]
-    }
-
     readonly property int animationsDuration: 173
     readonly property int animationsEasing: Easing.Linear
-    readonly property int sliderDuration: 3000
+    readonly property int sliderDuration: 1500
+
     readonly property int visibilityState: States.menuOpen
 
     LazyLoader {
@@ -55,8 +48,8 @@ Scope {
                 x: -width
 
                 MarginWrapperManager {
-                    topMargin: powermenuBase.margin
-                    leftMargin: powermenuBase.margin
+                    topMargin: Math.floor(powermenuBase.margin / 2)
+                    leftMargin: Math.floor(powermenuBase.margin / 2)
                     rightMargin: powermenuBase.margin
                     bottomMargin: powermenuBase.margin
                 }
@@ -67,6 +60,7 @@ Scope {
                         spacing: powermenuBase.windowSpacing
 
                         TopLevel {
+                            id: toplevel
                             spacing: powermenuBase.spacing
                         }
                         SideCell {
@@ -112,26 +106,26 @@ Scope {
                     }
                 ]
             }
-        }
-    }
 
-    HoverHandler {
-        id: hoverHandler
-        onHoveredChanged: {
-            if (hovered) {
-                hideTimer.stop();
-            } else {
-                hideTimer.start();
+            HoverHandler {
+                id: hoverHandler
+                onHoveredChanged: {
+                    if (hovered) {
+                        hideTimer.stop();
+                    } else {
+                        hideTimer.start();
+                    }
+                }
             }
-        }
-    }
 
-    Timer {
-        id: hideTimer
-        interval: powermenuBase.sliderDuration
-        repeat: false
-        onTriggered: {
-            States.menuOpen = false;
+            Timer {
+                id: hideTimer
+                interval: powermenuBase.sliderDuration
+                repeat: false
+                onTriggered: {
+                    States.menuOpen = false;
+                }
+            }
         }
     }
 }
