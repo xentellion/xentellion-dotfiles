@@ -47,6 +47,7 @@ Scope {
                 id: box
                 width: powermenu.width
                 x: -width
+                height: parent.height
 
                 MarginWrapperManager {
                     topMargin: Math.floor(powermenuBase.margin / 2)
@@ -57,6 +58,7 @@ Scope {
 
                 Item {
                     ColumnLayout {
+                        id: column
                         anchors.fill: parent
                         spacing: powermenuBase.windowSpacing
 
@@ -65,12 +67,26 @@ Scope {
                             spacing: powermenuBase.spacing
                         }
                         SideCell {
+                            id: media
                             Layout.preferredHeight: childrenRect.height + powermenuBase.spacing
                             LabelWhite {
                                 anchors.centerIn: parent
-                                text: "LMAO"
+                                text: "TODO: MEDIA"
                             }
                         }
+                        SideCell {
+                            id: notifications
+                            Layout.minimumHeight: childrenRect.height + powermenuBase.spacing
+                            Layout.fillHeight: true
+                            color: Theme.cellColor
+                            LabelWhite {
+                                anchors.centerIn: parent
+                                text: "TODO: Notifications"
+                            }
+                        }
+                        // Item {
+                        //     Layout.fillHeight: true
+                        // }
                     }
                 }
 

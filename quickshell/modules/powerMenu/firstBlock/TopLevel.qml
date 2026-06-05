@@ -13,7 +13,7 @@ SideCell {
 
     ColumnLayout {
         anchors.centerIn: parent
-        implicitWidth: parent.width - root.spacing * 2
+        implicitWidth: parent.width - root.spacing * 3
         spacing: root.spacing * 2
 
         BatteryShutdown {
@@ -32,32 +32,11 @@ SideCell {
             Layout.preferredWidth: parent.width
             spacing: root.spacing
         }
+        ButtonSet {
+            // Layout.preferredWidth: parent.width
+            Layout.fillWidth: true
 
-        RowLayout {
-            Layout.preferredHeight: childrenRect.height
-            Layout.preferredWidth: parent.width
             spacing: root.spacing
-
-            MenuCell {
-                spacing: root.spacing
-                Layout.fillWidth: true
-                text: "LOL"
-            }
-            MenuCell {
-                spacing: root.spacing
-                Layout.fillWidth: true
-                text: "LOL"
-            }
-            MenuCell {
-                spacing: root.spacing
-                Layout.fillWidth: true
-                text: "LOL"
-            }
-            MenuCell {
-                spacing: root.spacing
-                Layout.fillWidth: true
-                text: "LOL"
-            }
         }
     }
 }

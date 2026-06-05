@@ -17,7 +17,6 @@ Singleton {
 
     property var wifiDevices: ScriptModel {
         values: Networking.devices.values.filter(device => {
-            console.log(device);
             return device.type === DeviceType.Wifi;
         })
     }
@@ -77,6 +76,24 @@ Singleton {
     }
 
     function getNetworkName(device) {
+        if (device.networks.values[0] === undefined)
+            return "";
         return device.networks.values[0].name;
+    }
+
+    property var airplaneOn: Process {
+        command: ["pkexec", "rfkill", "block", "all"]
+
+        onRunningChanged: {
+            States.airplane = true;
+        }
+    }
+
+    property var airplaneOff: Process {
+        command: ["pkexec", "rfkill", "unblock", "all"]
+
+        onRunningChanged: {
+            States.airplane = false;
+        }
     }
 }

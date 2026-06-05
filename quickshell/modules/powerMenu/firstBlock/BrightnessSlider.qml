@@ -27,19 +27,24 @@ RowLayout {
         }
     }
     StyleSlider {
+        id: slider
         Layout.fillWidth: true
 
         from: 5
         to: 100
         value: BrightnessService.brightnessValue
+        Binding {
+            target: slider
+            property: "value"
+            value: BrightnessService.brightnessValue
+            when: !slider.pressed
+        }
 
-        stepSize: 10
+        stepSize: 5
         snapMode: Slider.SnapAlways
 
-        onValueChanged: {
-            if (pressed) {
-                BrightnessService.setBrightness(value);
-            }
+        onMoved: {
+            BrightnessService.setBrightness(value);
         }
     }
     Item {}

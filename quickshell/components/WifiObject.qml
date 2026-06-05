@@ -6,6 +6,9 @@ import "../services"
 RowLayout {
     id: root
     required property var modelData
+    visible: {
+        return modelData.state != 0;
+    }
 
     Item {
         Layout.minimumWidth: networkIcon.width

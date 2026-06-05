@@ -10,6 +10,7 @@ RowLayout {
 
     MenuCell {
         spacing: root.spacing
+
         text: {
             let result = `${BatteryService.icon} `;
             switch (BatteryService.battery.state) {

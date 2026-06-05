@@ -8,6 +8,7 @@ import "../config"
 Slider {
     id: root
 
+    readonly property int colorChangeDuration: 200
     property bool redCondition: false
 
     handle: Rectangle {
@@ -37,6 +38,12 @@ Slider {
             height: parent.height
             color: root.redCondition ? Theme.urgent : Theme.white
             radius: 2
+
+            Behavior on color {
+                ColorAnimation {
+                    duration: root.colorChangeDuration
+                }
+            }
         }
 
         HoverHandler {

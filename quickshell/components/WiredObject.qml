@@ -43,7 +43,7 @@ RowLayout {
                 anchors.centerIn: parent
                 isClickable: false
                 fontSize: 12
-                text: NetworkService.wiredDevices[0].linkSpeed
+                text: NetworkService.wiredDevices[0] !== undefined ? NetworkService.wiredDevices[0].linkSpeed : ""
             }
         }
     }

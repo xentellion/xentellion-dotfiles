@@ -8,5 +8,6 @@ singleton VolumeService 1.0 VolumeService.qml
 singleton BrightnessService 1.0 BrightnessService.qml
 singleton NetworkService 1.0 NetworkService.qml
 singleton BluetoothService 1.0 BluetoothService.qml
+singleton UpdatesService 1.0 UpdatesService.qml
 
 singleton NotificationServer 1.0 NotificationServer.qml

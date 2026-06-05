@@ -15,6 +15,7 @@ RowLayout {
         id: network
         property bool runAnimation: false
         property int sizeDuration: 200
+        property int anyVisible: 0
 
         spacing: root.spacing
         isClickable: true
@@ -33,18 +34,66 @@ RowLayout {
                 Layout.fillWidth: true
             }
             Repeater {
+                id: wifis
                 model: NetworkService.wifiDevices
 
                 delegate: WifiObject {
                     Layout.fillWidth: true
                     spacing: root.spacing
+                    onVisibleChanged: network.updateVisibilityState()
                 }
             }
             Repeater {
+                id: wireds
                 model: NetworkService.wiredDevices
                 delegate: WiredObject {
                     Layout.fillWidth: true
                     spacing: root.spacing
+                    onVisibleChanged: network.updateVisibilityState()
+                }
+            }
+            RowLayout {
+                id: noConnection
+                Layout.fillWidth: true
+                spacing: root.spacing
+                visible: network.anyVisible === 0
+
+                Item {
+                    Layout.minimumWidth: networkIcon.width
+                    LabelDark {
+                        id: networkIcon
+                        anchors.centerIn: parent
+                        isClickable: false
+                        text: Data.noNetwork
+                        fontSize: 30
+                    }
+                }
+                ColumnLayout {
+                    id: wifiBlock
+
+                    Item {
+                        Layout.preferredHeight: wifiText.height
+                        Layout.preferredWidth: wifiText.width
+
+                        LabelDark {
+                            id: wifiText
+                            anchors.centerIn: parent
+                            isClickable: false
+                            text: "No connection"
+                        }
+                    }
+                    Item {
+                        Layout.preferredHeight: networkName.height
+                        Layout.preferredWidth: networkName.width
+
+                        LabelDark {
+                            id: networkName
+                            anchors.centerIn: parent
+                            isClickable: false
+                            fontSize: 12
+                            text: "Go touch the grass I guess"
+                        }
+                    }
                 }
             }
             Item {
@@ -52,11 +101,27 @@ RowLayout {
             }
         }
 
+        function updateVisibilityState() {
+            let visibleCount = 0;
+            for (let i = 0; i < wifis.count; i++) {
+                let item = wifis.itemAt(i);
+                if (item && item.visible)
+                    visibleCount++;
+            }
+            for (let i = 0; i < wireds.count; i++) {
+                let item = wireds.itemAt(i);
+                if (item && item.visible)
+                    visibleCount++;
+            }
+            anyVisible = visibleCount;
+        }
+
         TapHandler {
             id: taphandler
             onTapped: {
                 network.runAnimation = !network.runAnimation;
                 NetworkService.openNetworkGui.running = true;
+                States.menuOpen = false;
             }
         }
 
@@ -95,6 +160,7 @@ RowLayout {
         TapHandler {
             onTapped: {
                 BluetoothService.openNetworkGui.running = true;
+                States.menuOpen = false;
             }
         }
 
