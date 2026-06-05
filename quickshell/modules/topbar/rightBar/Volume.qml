@@ -26,7 +26,12 @@ RowLayout {
             anchors.centerIn: volumeButton
             canHover: true
 
+            color: VolumeService.audioProps?.muted ? Theme.urgent : Theme.white
+
             text: {
+                if (VolumeService.audioProps === undefined) {
+                    return Data.volumeIcons[0];
+                }
                 if (VolumeService.audioProps?.muted) {
                     return Data.volumeMute;
                 }
@@ -65,10 +70,14 @@ RowLayout {
 
         from: 0.0
         to: 1.0
-        value: VolumeService.audioProps ? VolumeService.audioProps.volume : 0.0
+        value: VolumeService.audioProps ? VolumeService.audioProps?.volume : 0.0
 
         stepSize: 0.1
         snapMode: Slider.SnapAlways
+
+        redCondition: {
+            return VolumeService.audioProps === undefined ? false : VolumeService.audioProps.muted;
+        }
 
         onValueChanged: {
             if (VolumeService.audioProps && pressed) {

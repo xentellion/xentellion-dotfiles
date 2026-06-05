@@ -39,6 +39,10 @@ RowLayout {
         stepSize: 0.1
         snapMode: Slider.SnapAlways
 
+        redCondition: {
+            return VolumeService.audioProps === undefined ? false : VolumeService.audioProps.muted;
+        }
+
         onValueChanged: {
             if (VolumeService.audioProps && pressed) {
                 VolumeService.audioProps.volume = value;

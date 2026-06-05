@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell.Wayland
 
 import "../../../components"
+import "../../../config"
 
 Button {
     id: idler
@@ -14,10 +15,11 @@ Button {
         id: label
         canHover: true
         anchors.centerIn: parent
-        text: idler.checked ? "" : ""
+        text: Data.idleIcons[+idler.checked]
     }
 
     IdleInhibitor {
+        // Bruh
         window: topbar
         enabled: idler.checked
     }

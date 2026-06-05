@@ -7,7 +7,7 @@ Singleton {
     id: data
 
     // Workspace icons
-    property var symbolImgMap: {
+    readonly property var symbolImgMap: {
         "default": "󰚀",
         "libreoffice-draw": "󰽉",
         "libreoffice-writer": "󰷈",
@@ -27,6 +27,7 @@ Singleton {
         "org.mozilla.thunderbird": "",
         "v2rayN": "󰟪"
     }
+
     // Quotation
     readonly property var jsonData: JSON.parse(fileViewQuote.text())
     readonly property var quotes: jsonData["quotes"]
@@ -45,15 +46,21 @@ Singleton {
     }
 
     // Wifi icons
-    property var wifiConnected: ["󰤟", "󰤢", "󰤥", "󰤨"]
-    property var wifiLimited: ["󰤠", "󰤣", "󰤦", "󰤩"]
-    property string wifiConnecting: "󰤯"
-    property string wifiUnknown: "󰤮"
-    property string wired: ""
-    property string noNetwork: ""
+    readonly property var wifiConnected: ["󰤟", "󰤢", "󰤥", "󰤨"]
+    readonly property var wifiLimited: ["󰤠", "󰤣", "󰤦", "󰤩"]
+    readonly property string wifiConnecting: "󰤯"
+    readonly property string wifiUnknown: "󰤮"
+    readonly property string wired: ""
+    readonly property string noNetwork: ""
+
+    // Bluetooth icons
+    readonly property string bluetooth: "󰂯"
+    readonly property string bluetoothOff: "󰂲"
+
+    // Sleep icons
+    readonly property var idleIcons: ["", ""]
 
     // Battery icons
-    readonly property string batteryTemplate: "Battery level is at %1%!"
     readonly property var batteryLevel: ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
     readonly property string batteryEmpty: "󰂎"
     readonly property string pluggedIcon: ""
@@ -61,7 +68,9 @@ Singleton {
 
     // Volume icons
     readonly property var volumeIcons: ["", ""]
-    // readonly property var volumeIcons: ["󰕿", "󰖀", "󰕾"]
     readonly property string volumeMute: ""
     readonly property string microhoneIcon: ""
+
+    // Brightness icons
+    readonly property string brightIcon: ""
 }

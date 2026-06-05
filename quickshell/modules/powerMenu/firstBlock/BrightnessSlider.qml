@@ -14,14 +14,11 @@ RowLayout {
         spacing: root.spacing
         isSquare: true
         isClickable: true
-        text: "󰃟"
+        text: Data.brightIcon
 
         TapHandler {
             id: rmb
             acceptedButtons: Qt.LeftButton
-            // onTapped: {
-            //     VolumeService.switchMute.running = true;
-            // }
         }
 
         Component.onCompleted: {
@@ -32,18 +29,18 @@ RowLayout {
     StyleSlider {
         Layout.fillWidth: true
 
-        from: 0.0
-        to: 1.0
-        // value: VolumeService.audioProps ? VolumeService.audioProps.volume : 0.0
+        from: 5
+        to: 100
+        value: BrightnessService.brightnessValue
 
-        stepSize: 0.1
+        stepSize: 10
         snapMode: Slider.SnapAlways
 
-        // onValueChanged: {
-        //     if (VolumeService.audioProps && pressed) {
-        //         VolumeService.audioProps.volume = value;
-        //     }
-        // }
+        onValueChanged: {
+            if (pressed) {
+                BrightnessService.setBrightness(value);
+            }
+        }
     }
     Item {}
 }

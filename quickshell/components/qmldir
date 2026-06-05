@@ -8,3 +8,5 @@ LabelWhite 1.0 LabelWhite.qml
 TextLight 1.0 TextLight.qml
 TextShadow 1.0 TextShadow.qml
 StyleSlider 1.0 StyleSlider.qml
+WifiObject 1.0 WifiObject.qml
+WiredObject 1.0 WiredObject.qml

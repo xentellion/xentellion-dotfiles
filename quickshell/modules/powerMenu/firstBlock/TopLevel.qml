@@ -1,11 +1,8 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 
-import "../../../config"
-import "../../../services"
 import "../../../components"
 
 SideCell {
@@ -31,20 +28,9 @@ SideCell {
             Layout.preferredWidth: parent.width
             spacing: root.spacing * 2
         }
-        RowLayout {
-            Layout.preferredHeight: childrenRect.height
+        NetworkBluetooth {
             Layout.preferredWidth: parent.width
             spacing: root.spacing
-
-            MenuCell {
-                spacing: root.spacing
-                Layout.fillWidth: true
-                text: "LOL"
-            }
-            MenuCell {
-                spacing: root.spacing
-                text: "LOL"
-            }
         }
 
         RowLayout {

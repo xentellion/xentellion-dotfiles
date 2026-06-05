@@ -1,15 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Quickshell.Io
-import Quickshell.Bluetooth
 
 import "../../../config"
+import "../../../services"
 import "../../../components"
 
 Button {
     id: network
-    property bool isActive: Bluetooth.defaultAdapter != null
     background: null
     checkable: true
     Layout.preferredWidth: label.implicitWidth + spacing * 2
@@ -19,22 +17,14 @@ Button {
         canHover: true
 
         anchors.centerIn: parent
-        text: {
-            let adapter = Bluetooth.defaultAdapter;
-            return "󰂯";
-        }
-        color: network.isActive ? Theme.warning : Theme.white
+        text: Data.bluetooth
+        color: BluetoothService.adapter != null ? Theme.warning : Theme.white
     }
 
     TapHandler {
         onTapped: {
-            openNetworkGui.running = true;
+            BluetoothService.openNetworkGui.running = true;
         }
-    }
-
-    Process {
-        id: openNetworkGui
-        command: ["blueman-manager"]
     }
 
     HoverHandler {

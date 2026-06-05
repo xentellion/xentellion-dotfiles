@@ -8,26 +8,31 @@ import "../config"
 Rectangle {
     id: root
     required property int spacing
-    required property string text
+    property string text: ""
     property bool isSquare: false
     property bool canHover: true
     property bool isClickable: false
 
+    property alias fontWeightDark: textObject.fontSize
+
     Layout.preferredHeight: childrenRect.height
-    Layout.preferredWidth: isSquare ? childrenRect.height : childrenRect.width + spacing * 2
+    Layout.preferredWidth: isSquare ? textObject.height : textObject.width + spacing * 2
 
     radius: height > 20 ? 10 : height / 2
 
     color: Theme.white
 
     LabelDark {
+        id: textObject
         anchors.centerIn: parent
         isClickable: root.isClickable
         text: root.text
+        visible: text !== ""
     }
 
     HoverHandler {
         id: hover
+        cursorShape: root.isClickable ? Qt.PointingHandCursor : Qt.ArrowCursor
     }
 
     layer.enabled: canHover ? hover.hovered : false

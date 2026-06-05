@@ -6,7 +6,7 @@ import QtQuick.Controls
 import "../config"
 
 Label {
-    id: label
+    id: root
     property bool canHover: false
     property bool runAnimation: false
     property bool isClickable: true
@@ -22,7 +22,7 @@ Label {
 
     layer.enabled: canHover ? hover.hovered : false
     layer.effect: TextLight {
-        source: label
+        source: root
     }
 
     HoverHandler {
@@ -32,31 +32,31 @@ Label {
     TapHandler {
         id: tap
         onTapped: {
-            if (label.isClickable)
-                label.runAnimation = !label.runAnimation;
+            if (root.isClickable)
+                root.runAnimation = !root.runAnimation;
         }
     }
 
     Behavior on runAnimation {
         SequentialAnimation {
             NumberAnimation {
-                target: label
+                target: root
                 properties: "fontSize"
                 to: 10
-                duration: label.colorChangeDuration / 2
+                duration: root.colorChangeDuration / 2
             }
             NumberAnimation {
-                target: label
+                target: root
                 properties: "fontSize"
-                to: 16
-                duration: label.colorChangeDuration / 2
+                to: root.fontSize
+                duration: root.colorChangeDuration / 2
             }
         }
     }
 
     Behavior on color {
         ColorAnimation {
-            duration: label.colorChangeDuration
+            duration: root.colorChangeDuration
         }
     }
 }

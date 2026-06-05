@@ -20,10 +20,11 @@ Singleton {
 
     readonly property string timeToEmpty: "Empty" + getTimeUntil(battery?.timeToEmpty)
     readonly property string timeToFull: "Full" + getTimeUntil(battery?.timeToFull)
+    readonly property string batteryTemplate: "Battery level is at %1%!"
 
     readonly property var assets: {
-        "warning": Qt.resolvedUrl("../../../assets/icons/warning.png"),
-        "danger": Qt.resolvedUrl("../../../assets/icons/danger.png")
+        "warning": Qt.resolvedUrl("../assets/icons/warning.png"),
+        "danger": Qt.resolvedUrl("../assets/icons/danger.png")
     }
 
     property real percentage: Math.floor(battery?.percentage * 100)
@@ -99,7 +100,7 @@ Singleton {
     }
 
     function checkBatteryState() {
-        switch (checkState()) {
+        switch (alertState) {
         case 1:
             if (isWarningSent)
                 break;
@@ -124,16 +125,6 @@ Singleton {
         }
     }
 
-    function checkState() {
-        if (isCharging)
-            return 0;
-        else if (percentage <= dangerLevel)
-            return 2;
-        else if (percentage <= warningLevel)
-            return 1;
-        return 0;
-    }
-
     readonly property var shutdown: Process {
         command: ["shutdown", "now"]
     }
@@ -144,11 +135,11 @@ Singleton {
 
     Process {
         id: warningSend
-        command: ["notify-send", "-u", "critical", "-i", root.assets["warning"], "Battery low", Data.batteryTemplate.arg(root.percentage)]
+        command: ["notify-send", "-u", "critical", "-i", root.assets["warning"], "Battery low", root.batteryTemplate.arg(root.percentage)]
     }
 
     Process {
         id: dangerSend
-        command: ["notify-send", "-u", "critical", "-i", root.assets["danger"], "Battery is CRITICALLY low!", Data.batteryTemplate.arg(root.percentage)]
+        command: ["notify-send", "-u", "critical", "-i", root.assets["danger"], "Battery is CRITICALLY low!", root.batteryTemplate.arg(root.percentage)]
     }
 }
