@@ -15,7 +15,7 @@ Rectangle {
 
     radius: 10
 
-    color: Theme.textColor
+    color: Theme.sideColor
 
     border.color: Theme.cellBorder
     border.width: 2

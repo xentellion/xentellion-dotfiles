@@ -133,6 +133,10 @@ Singleton {
         command: ["reboot"]
     }
 
+    readonly property var logout: Process {
+        command: ["hyprctl", "dispatch", "exit"]
+    }
+
     Process {
         id: warningSend
         command: ["notify-send", "-u", "critical", "-i", root.assets["warning"], "Battery low", root.batteryTemplate.arg(root.percentage)]

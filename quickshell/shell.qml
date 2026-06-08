@@ -1,11 +1,14 @@
 import Quickshell
-// import "modules"
+
 import "modules/topbar"
 import "modules/powerMenu"
+import "config"
 
 ShellRoot {
     id: root
 
     TopBar {}
     PowerMenu {}
+
+    KeyBinds {}
 }

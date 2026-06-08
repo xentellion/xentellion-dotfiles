@@ -7,13 +7,16 @@ import "../../../services"
 import "../../../components"
 
 RowLayout {
-    id: volumeTab
+    id: root
+    required property int spacingMax
+
     readonly property int animationDuration: 200
     readonly property int sliderDuration: 2000
 
     property bool silentBoot: false // Is used to hide slider on quickshell boot
 
     property bool sliderVisible: false
+    spacing: sliderVisible ? spacingMax : 0
 
     Button {
         id: volumeButton
@@ -43,7 +46,7 @@ RowLayout {
             id: lmb
             acceptedButtons: Qt.LeftButton
             onTapped: {
-                volumeTab.showSiderTemporarily();
+                root.showSiderTemporarily();
             }
         }
 
@@ -63,10 +66,10 @@ RowLayout {
     StyleSlider {
         id: volumeSlider
 
-        Layout.preferredWidth: volumeTab.sliderVisible ? 120 : 0
+        Layout.preferredWidth: root.sliderVisible ? 120 : 0
         clip: true
 
-        opacity: volumeTab.sliderVisible
+        opacity: root.sliderVisible
 
         from: 0.0
         to: 1.0
@@ -87,13 +90,13 @@ RowLayout {
 
         Behavior on Layout.preferredWidth {
             NumberAnimation {
-                duration: volumeTab.animationDuration
+                duration: root.animationDuration
             }
         }
 
         Behavior on opacity {
             NumberAnimation {
-                duration: volumeTab.animationDuration
+                duration: root.animationDuration
             }
         }
     }
@@ -101,25 +104,25 @@ RowLayout {
     Connections {
         target: VolumeService.audioProps === undefined ? null : VolumeService.audioProps
         function onVolumeChanged() {
-            if (!volumeTab.silentBoot) {
-                volumeTab.silentBoot = true;
+            if (!root.silentBoot) {
+                root.silentBoot = true;
                 return;
             }
-            volumeTab.showSiderTemporarily();
+            root.showSiderTemporarily();
         }
     }
 
     Timer {
         id: hideTimer
-        interval: volumeTab.sliderDuration
+        interval: root.sliderDuration
         repeat: false
         onTriggered: {
-            volumeTab.sliderVisible = false;
+            root.sliderVisible = false;
         }
     }
 
     function showSiderTemporarily() {
-        volumeTab.sliderVisible = true;
+        root.sliderVisible = true;
         hideTimer.restart();
     }
 }

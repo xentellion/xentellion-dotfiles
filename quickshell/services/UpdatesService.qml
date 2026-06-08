@@ -7,7 +7,7 @@ import Quickshell.Io
 Singleton {
     id: root
 
-    readonly property int updateTime: 10 * 60 * 1000
+    readonly property int updateTime: 60 * 1000
 
     property var updates: ListModel {}
 

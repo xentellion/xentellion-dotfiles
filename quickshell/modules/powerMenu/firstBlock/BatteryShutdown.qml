@@ -43,6 +43,19 @@ RowLayout {
         Layout.fillWidth: true
     }
     MenuCell {
+        id: logout
+        spacing: root.spacing
+        isSquare: true
+        isClickable: true
+        text: "󰀄"
+
+        TapHandler {
+            onTapped: {
+                BatteryService.logout.running = true;
+            }
+        }
+    }
+    MenuCell {
         id: rebootButton
         spacing: root.spacing
         isSquare: true

@@ -9,7 +9,7 @@ Singleton {
 
     readonly property color white: "white"
     readonly property color cellColor: "#66061840"
-    readonly property color sideColor: "#BB061840"
+    readonly property color sideColor: "#CC061840"
     readonly property color cellHighlight: "#96061840"
     readonly property color cellBorder: "#44FFFFFF"
     readonly property color paleBackground: "#bdbebf"

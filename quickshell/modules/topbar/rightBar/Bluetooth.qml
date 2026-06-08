@@ -10,7 +10,7 @@ Button {
     id: network
     background: null
     checkable: true
-    Layout.preferredWidth: label.implicitWidth + spacing * 2
+    // Layout.preferredWidth: label.implicitWidth + spacing * 2
 
     LabelWhite {
         id: label

@@ -11,7 +11,7 @@ DefaultCell {
     required property int spacing
     property bool capsVisible: false
 
-    Layout.preferredWidth: langdata.width + spacing * 4
+    implicitWidth: langdata.width + spacing * 4
     visible: LayoutService.currentLayout !== ""
 
     RowLayout {

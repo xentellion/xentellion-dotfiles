@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Widgets
 
 import "../../../config"
 import "../../../components"
@@ -10,8 +11,6 @@ import "../../../services"
 ColumnLayout {
     id: root
     Layout.preferredHeight: content.height + (updatesTable.visible ? updatesTable.height + spacing : 0)
-
-    // required property int spacing
 
     RowLayout {
         id: content
@@ -28,15 +27,6 @@ ColumnLayout {
                 acceptedButtons: Qt.LeftButton
                 onTapped: {
                     updatesTable.isVisible = !updatesTable.isVisible;
-                }
-            }
-
-            TapHandler {
-                id: rmb
-                acceptedButtons: Qt.RightButton
-                onTapped: {
-                    States.menuOpen = false;
-                    UpdatesService.startUpdates.running = true;
                 }
             }
 
@@ -86,22 +76,68 @@ ColumnLayout {
         property bool isVisible: false
 
         Layout.fillWidth: true
-        Layout.preferredHeight: isVisible ? 200 : 0
+        Layout.preferredHeight: isVisible ? 220 : 0
         radius: 20
         clip: true
 
-        ListView {
-            anchors.fill: parent
-            anchors.margins: 15
+        ColumnLayout {
+            spacing: root.spacing
+            anchors {
+                fill: parent
+                leftMargin: 15
+                rightMargin: 15
+                topMargin: 5
+                bottomMargin: 10
+            }
 
-            model: UpdatesService.updates
-            delegate: Text {
-                id: theText
-                required property string name
-                required property string version
-                text: `<b>${name}</b> -> ${version}`
+            ClippingWrapperRectangle {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                ListView {
+                    anchors.fill: parent
+                    anchors.margins: 10
+
+                    model: UpdatesService.updates
+                    delegate: Text {
+                        id: theText
+                        required property string name
+                        required property string version
+                        text: `<b>${name}</b> -> ${version}`
+                        color: Theme.textColor
+                        font.pixelSize: 16
+
+                        layer.enabled: true
+                        layer.effect: TextShadow {
+                            source: theText
+                        }
+                    }
+                }
+            }
+
+            DefaultCell {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 30
                 color: Theme.textColor
-                font.pixelSize: 16
+
+                LabelWhite {
+                    isClickable: true
+                    canHover: true
+                    anchors.fill: parent
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    text: "Update"
+                }
+
+                TapHandler {
+                    acceptedButtons: Qt.LeftButton
+                    onTapped: {
+                        States.menuOpen = false;
+                        UpdatesService.startUpdates.running = true;
+                    }
+                }
             }
         }
 

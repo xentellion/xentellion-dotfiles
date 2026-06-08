@@ -2,3 +2,4 @@ module leftBar
 
 Menu 1.0 Menu.qml
 WindowInfo 1.0 WindowInfo.qml
+LeftBar 1.0 LeftBar.qml

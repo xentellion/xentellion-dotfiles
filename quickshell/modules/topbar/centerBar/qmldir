@@ -1,3 +1,4 @@
 module centerBar
 
 Workspace 1.0 Workspace.qml
+CenterBar 1.0 CenterBar.qml

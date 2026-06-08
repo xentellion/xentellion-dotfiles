@@ -11,7 +11,7 @@ import "centerBar"
 import "rightBar"
 
 Scope {
-    id: topbarBase
+    id: root
 
     property int spacing: 10
     property int margin: 5
@@ -26,7 +26,7 @@ Scope {
             color: "transparent"
 
             implicitWidth: screen.width
-            implicitHeight: topbarBase.barHeight
+            implicitHeight: root.barHeight
 
             anchors {
                 top: true
@@ -38,7 +38,7 @@ Scope {
                 anchors.fill: parent
 
                 MarginWrapperManager {
-                    margin: topbarBase.margin
+                    margin: root.margin
                 }
 
                 gradient: Gradient {
@@ -53,121 +53,25 @@ Scope {
                 }
 
                 Item {
-                    DefaultCell {
-                        id: leftBar
-                        anchors {
-                            top: parent.top
-                            left: parent.left
-                        }
-                        implicitWidth: leftBlock.width + topbarBase.spacing * 4
-                        height: parent.height
-
-                        RowLayout {
-                            id: leftBlock
-                            spacing: topbarBase.spacing * 2
-                            anchors {
-                                centerIn: parent
-                            }
-
-                            Menu {}
-                            WindowInfo {}
-                        }
-                    }
-
-                    DefaultCell {
+                    CenterBar {
                         id: workspaceBar
-                        anchors {
-                            top: parent.top
-                        }
-
-                        width: centerBlocks.width + topbarBase.spacing * 2
-                        height: parent.height
-                        radius: Math.floor(height / 2)
-
-                        property int leftmost: leftBar.x + leftBar.width + topbarBase.spacing
-                        property int perfectHalf: Math.floor((topbar.width - workspaceBar.width) / 2)
-
-                        x: Math.max(leftmost, perfectHalf)
-                        // If amount of open windows starts to get overwhelming - its only YOUR fault
-
-                        RowLayout {
-                            id: centerBlocks
-                            anchors.centerIn: parent
-                            spacing: topbarBase.spacing
-
-                            Repeater {
-                                Layout.alignment: Qt.AlignCenter
-                                model: 10
-                                Workspace {
-                                    defaultOpen: 5
-                                    spacing: topbarBase.spacing
-                                    barHeight: topbarBase.barHeight
-                                }
-                            }
-                        }
+                        spacing: root.spacing
+                        maxWidth: topbar.width
+                        maxHeight: root.barHeight
+                        rightX: rightBar.x
                     }
 
-                    RowLayout {
+                    LeftBar {
+                        id: leftBar
+                        spacing: root.spacing
+                        rightX: workspaceBar.x
+                        myTopmargin: root.margin
+                    }
+
+                    RightBar {
                         id: rightBar
-                        spacing: topbarBase.spacing
-                        anchors {
-                            top: parent.top
-                            right: parent.right
-                        }
-                        height: parent.height
-
-                        Language {
-                            id: languageLayout
-                            spacing: topbarBase.spacing
-                            Layout.alignment: Qt.AlignRight
-                        }
-                        DefaultCell {
-                            id: dataBlock
-                            Layout.alignment: Qt.AlignRight
-                            Layout.preferredWidth: childrenRect.width + topbarBase.spacing * 3
-
-                            RowLayout {
-                                anchors {
-                                    top: parent.top
-                                    bottom: parent.bottom
-                                    centerIn: parent
-                                }
-
-                                Idle {}
-                                Wifi {}
-                                Bluetooth {}
-                                Microphone {}
-                                Volume {}
-                            }
-                        }
-                        Battery {
-                            id: battery
-                            spacing: topbarBase.spacing
-                            Layout.alignment: Qt.AlignRight
-                        }
-                        Clock {
-                            id: timePlate
-                            spacing: topbarBase.spacing
-                            Layout.alignment: Qt.AlignRight
-                        }
+                        spacing: root.spacing
                     }
-
-                    // RowLayout {
-                    //     spacing: topbarBase.spacing
-                    //     anchors.fill: parent
-
-                    // Item {
-                    //     id: leftSpacer
-                    //     property real trueCenterLeft: (topbar.width - workspaceBar.width) / 2
-                    //     property real rightPushLeft: leftBar.x + workspaceBar.width - topbarBase.spacing
-                    //     Layout.preferredWidth: Math.min(trueCenterLeft, rightPushLeft) - leftBar.width + topbarBase.spacing
-                    // }
-
-                    // Item {
-                    //     id: rightSpacer
-                    //     Layout.fillWidth: true
-                    // }
-                    // }
                 }
             }
         }

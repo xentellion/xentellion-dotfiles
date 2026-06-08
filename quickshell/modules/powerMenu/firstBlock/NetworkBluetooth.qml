@@ -1,4 +1,5 @@
 pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
 
@@ -40,7 +41,12 @@ RowLayout {
                 delegate: WifiObject {
                     Layout.fillWidth: true
                     spacing: root.spacing
-                    onVisibleChanged: network.updateVisibilityState()
+                    onVisibleChanged: {
+                        network.updateVisibilityState();
+                    }
+                    Component.onCompleted: {
+                        network.updateVisibilityState();
+                    }
                 }
             }
             Repeater {
@@ -49,7 +55,12 @@ RowLayout {
                 delegate: WiredObject {
                     Layout.fillWidth: true
                     spacing: root.spacing
-                    onVisibleChanged: network.updateVisibilityState()
+                    onVisibleChanged: {
+                        network.updateVisibilityState();
+                    }
+                    Component.onCompleted: {
+                        network.updateVisibilityState();
+                    }
                 }
             }
             RowLayout {

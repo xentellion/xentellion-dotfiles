@@ -1,5 +1,4 @@
 import QtQuick
-import Quickshell.Io
 import QtQuick.Controls
 
 import "../../../config"
@@ -9,6 +8,7 @@ Button {
     id: menu
     property int colorChangeDuration: 200
     property bool runAnimation: false
+    // width: logo.width
 
     background: null
 

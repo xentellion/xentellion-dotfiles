@@ -12,7 +12,7 @@ import "../../components"
 Scope {
     id: powermenuBase
 
-    readonly property int width: 400
+    readonly property int width: 420
     readonly property int margin: 10
     readonly property int spacing: 10
     readonly property int windowSpacing: 5
@@ -79,14 +79,12 @@ Scope {
                             Layout.minimumHeight: childrenRect.height + powermenuBase.spacing
                             Layout.fillHeight: true
                             color: Theme.cellColor
+                            layer.enabled: false
                             LabelWhite {
                                 anchors.centerIn: parent
                                 text: "TODO: Notifications"
                             }
                         }
-                        // Item {
-                        //     Layout.fillHeight: true
-                        // }
                     }
                 }
 
@@ -126,13 +124,13 @@ Scope {
 
             HoverHandler {
                 id: hoverHandler
-                onHoveredChanged: {
-                    if (hovered) {
-                        hideTimer.stop();
-                    } else {
-                        hideTimer.start();
-                    }
-                }
+                // onHoveredChanged: {
+                //     if (hovered) {
+                //         hideTimer.stop();
+                //     } else {
+                //         hideTimer.start();
+                //     }
+                // }
             }
 
             Timer {
