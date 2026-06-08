@@ -9,8 +9,6 @@ SideCell {
     id: root
     required property int spacing
 
-    Layout.preferredHeight: childrenRect.height + spacing * 2
-
     ColumnLayout {
         anchors.centerIn: parent
         implicitWidth: parent.width - root.spacing * 3
@@ -33,9 +31,7 @@ SideCell {
             spacing: root.spacing
         }
         ButtonSet {
-            // Layout.preferredWidth: parent.width
             Layout.fillWidth: true
-
             spacing: root.spacing
         }
     }

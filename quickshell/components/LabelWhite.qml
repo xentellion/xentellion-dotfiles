@@ -29,8 +29,8 @@ Label {
         id: hover
     }
 
-    TapHandler {
-        id: tap
+    property var tap: TapHandler {
+        target: root
         onTapped: {
             if (root.isClickable)
                 root.runAnimation = !root.runAnimation;

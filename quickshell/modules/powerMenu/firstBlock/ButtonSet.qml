@@ -10,20 +10,20 @@ import "../../../services"
 
 ColumnLayout {
     id: root
-    Layout.preferredHeight: content.height + (updatesTable.visible ? updatesTable.height + spacing : 0)
+    Layout.preferredHeight: content.height + (updatesTable.visible ? updatesTable.height + spacing * 2 : 0)
 
     RowLayout {
         id: content
         spacing: root.spacing
 
         MenuCell {
+            id: updates
             spacing: root.spacing
             Layout.fillWidth: true
             text: "󰚰 " + UpdatesService.updates.count
             isClickable: true
 
             TapHandler {
-                id: lmb
                 acceptedButtons: Qt.LeftButton
                 onTapped: {
                     updatesTable.isVisible = !updatesTable.isVisible;
@@ -36,10 +36,18 @@ ColumnLayout {
             }
         }
         MenuCell {
+            id: powerProfiles
             spacing: root.spacing
             Layout.fillWidth: true
             isClickable: true
             text: "power-profiles"
+
+            TapHandler {
+                acceptedButtons: Qt.LeftButton
+                onTapped: {
+                    updatesTable.isVisible = false;
+                }
+            }
 
             Component.onCompleted: {
                 Layout.preferredWidth = Layout.preferredWidth;
@@ -47,6 +55,7 @@ ColumnLayout {
             }
         }
         MenuCell {
+            id: plane
             spacing: root.spacing
             Layout.fillWidth: true
             isClickable: true
@@ -54,13 +63,13 @@ ColumnLayout {
             textColor: States.airplane ? Theme.textColor : Theme.cellColor
 
             TapHandler {
-                id: lmbPlane
                 onTapped: {
                     if (States.airplane) {
                         NetworkService.airplaneOff.running = true;
                     } else {
                         NetworkService.airplaneOn.running = true;
                     }
+                    updatesTable.isVisible = false;
                 }
             }
 
@@ -95,6 +104,7 @@ ColumnLayout {
                 Layout.fillHeight: true
 
                 ListView {
+                    id: list
                     anchors.fill: parent
                     anchors.margins: 10
 
@@ -111,6 +121,10 @@ ColumnLayout {
                         layer.effect: TextShadow {
                             source: theText
                         }
+                    }
+
+                    HoverHandler {
+                        id: hover
                     }
                 }
             }
@@ -134,6 +148,7 @@ ColumnLayout {
                 TapHandler {
                     acceptedButtons: Qt.LeftButton
                     onTapped: {
+                        updatesTable.isVisible = false;
                         States.menuOpen = false;
                         UpdatesService.startUpdates.running = true;
                     }

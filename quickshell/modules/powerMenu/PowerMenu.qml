@@ -1,24 +1,25 @@
 pragma ComponentBehavior: Bound
 
-import Quickshell
-import Quickshell.Widgets
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
+import Quickshell
+import Quickshell.Services.Mpris
 
 import "../../config"
 import "firstBlock"
-import "../../components"
+import "otherBlocks"
 
 Scope {
-    id: powermenuBase
+    id: root
 
     readonly property int width: 420
     readonly property int margin: 10
     readonly property int spacing: 10
     readonly property int windowSpacing: 5
 
-    readonly property int animationsDuration: 173
-    readonly property int animationsEasing: Easing.Linear
+    readonly property int animationsDuration: 400
+    readonly property int animationsEasing: Easing.InOutExpo
     readonly property int sliderDuration: 1500
 
     readonly property int visibilityState: States.menuOpen
@@ -30,7 +31,7 @@ Scope {
             id: powermenu
 
             implicitHeight: screen.height
-            implicitWidth: powermenuBase.width
+            implicitWidth: root.width
 
             exclusionMode: ExclusionMode.Normal
             aboveWindows: false
@@ -49,41 +50,63 @@ Scope {
                 x: -width
                 height: parent.height
 
-                MarginWrapperManager {
-                    topMargin: Math.floor(powermenuBase.margin / 2)
-                    leftMargin: Math.floor(powermenuBase.margin / 2)
-                    rightMargin: powermenuBase.margin
-                    bottomMargin: powermenuBase.margin
-                }
+                ScrollView {
+                    id: scrollView
+                    anchors.fill: parent
+                    anchors {
+                        topMargin: 2
+                        bottomMargin: 2
+                        leftMargin: 10
+                        rightMargin: 10
+                    }
+                    clip: true
+                    contentHeight: column.implicitHeight + anchors.topMargin + anchors.bottomMargin + root.spacing
 
-                Item {
                     ColumnLayout {
                         id: column
                         anchors.fill: parent
-                        spacing: powermenuBase.windowSpacing
+                        spacing: root.windowSpacing
+                        anchors.topMargin: 5
+                        anchors.bottomMargin: 5
 
                         TopLevel {
                             id: toplevel
-                            spacing: powermenuBase.spacing
+                            Layout.preferredHeight: toplevel.childrenRect.height + root.spacing * 2
+                            Layout.fillWidth: true
+
+                            spacing: root.spacing
                         }
-                        SideCell {
-                            id: media
-                            Layout.preferredHeight: childrenRect.height + powermenuBase.spacing
-                            LabelWhite {
-                                anchors.centerIn: parent
-                                text: "TODO: MEDIA"
+                        TrayBlock {
+                            id: tray
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: childrenRect.height + root.spacing
+                            spacing: root.spacing
+                        }
+                        Repeater {
+                            id: medias
+                            model: Mpris.players
+                            delegate: MediaBlock {
+                                id: media
+
+                                Layout.preferredHeight: media.childrenRect.height + root.spacing * 2
+                                Layout.fillWidth: true
+                                spacing: root.spacing
                             }
                         }
-                        SideCell {
+                        NotifyBlock {
                             id: notifications
-                            Layout.minimumHeight: childrenRect.height + powermenuBase.spacing
-                            Layout.fillHeight: true
-                            color: Theme.cellColor
-                            layer.enabled: false
-                            LabelWhite {
-                                anchors.centerIn: parent
-                                text: "TODO: Notifications"
+                            Layout.preferredHeight: {
+                                let counter = 0;
+                                for (let i = 0; i < Mpris.players.values.length; i++) {
+                                    if (medias.model.values[i].playbackState !== MprisPlaybackState.Stopped) {
+                                        counter++;
+                                    }
+                                }
+                                if (counter == 0)
+                                    return Screen.height - notifications.y - States.barHeight - root.spacing * 2;
+                                return Math.floor(Screen.height * 0.75);
                             }
+                            Layout.fillWidth: true
                         }
                     }
                 }
@@ -114,8 +137,8 @@ Scope {
                             NumberAnimation {
                                 target: box
                                 properties: "x"
-                                duration: powermenuBase.animationsDuration
-                                easing.type: powermenuBase.animationsEasing
+                                duration: root.animationsDuration
+                                easing.type: root.animationsEasing
                             }
                         }
                     }
@@ -133,14 +156,14 @@ Scope {
                 // }
             }
 
-            Timer {
-                id: hideTimer
-                interval: powermenuBase.sliderDuration
-                repeat: false
-                onTriggered: {
-                    States.menuOpen = false;
-                }
-            }
+            // Timer {
+            //     id: hideTimer
+            //     interval: powermenuBase.sliderDuration
+            //     repeat: false
+            //     onTriggered: {
+            //         States.menuOpen = false;
+            //     }
+            // }
         }
     }
 }

@@ -15,7 +15,6 @@ Scope {
 
     property int spacing: 10
     property int margin: 5
-    property int barHeight: 50
 
     Variants {
         model: Quickshell.screens
@@ -26,7 +25,7 @@ Scope {
             color: "transparent"
 
             implicitWidth: screen.width
-            implicitHeight: root.barHeight
+            implicitHeight: States.barHeight
 
             anchors {
                 top: true
@@ -57,7 +56,7 @@ Scope {
                         id: workspaceBar
                         spacing: root.spacing
                         maxWidth: topbar.width
-                        maxHeight: root.barHeight
+                        maxHeight: States.barHeight
                         rightX: rightBar.x
                     }
 

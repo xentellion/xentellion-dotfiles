@@ -13,7 +13,8 @@ RowLayout {
     MenuCell {
         spacing: root.spacing
         isSquare: true
-        isClickable: true
+        // isClickable: true
+        canHover: false
         text: Data.brightIcon
 
         TapHandler {
@@ -30,9 +31,9 @@ RowLayout {
         id: slider
         Layout.fillWidth: true
 
-        from: 5
+        from: 1
         to: 100
-        value: BrightnessService.brightnessValue
+
         Binding {
             target: slider
             property: "value"
@@ -40,11 +41,13 @@ RowLayout {
             when: !slider.pressed
         }
 
-        stepSize: 5
+        stepSize: 10
         snapMode: Slider.SnapAlways
 
         onMoved: {
-            BrightnessService.setBrightness(value);
+            if (slider.pressed) {
+                BrightnessService.setBrightness(value);
+            }
         }
     }
     Item {}

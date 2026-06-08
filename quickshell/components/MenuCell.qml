@@ -16,7 +16,7 @@ Rectangle {
 
     property alias fontWeightDark: textObject.fontSize
 
-    Layout.preferredHeight: childrenRect.height
+    Layout.preferredHeight: textObject.height
     Layout.preferredWidth: isSquare ? textObject.implicitHeight : textObject.width + spacing * 2
 
     radius: height > 20 ? 10 : height / 2
@@ -26,10 +26,12 @@ Rectangle {
     LabelDark {
         id: textObject
         anchors.centerIn: parent
+        visible: text !== ""
+
         isClickable: root.isClickable
+
         color: root.textColor
         text: root.text
-        visible: text !== ""
     }
 
     HoverHandler {
@@ -40,5 +42,9 @@ Rectangle {
     layer.enabled: canHover ? hover.hovered : false
     layer.effect: TextLight {
         source: root
+    }
+
+    Component.onCompleted: {
+        textObject.tap.parent = root;
     }
 }

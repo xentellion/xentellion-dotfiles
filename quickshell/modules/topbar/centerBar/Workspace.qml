@@ -30,7 +30,7 @@ Rectangle {
     property var blinkEasing: Easing.InOutSine
 
     property int sizeChangeDuration: 200
-    property var sizeChangeEasing: Easing.Linear
+    property var sizeChangeEasing: Easing.InOutCubic
 
     property string wsTitle: ""
 

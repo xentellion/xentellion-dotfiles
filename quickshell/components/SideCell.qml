@@ -20,12 +20,5 @@ Rectangle {
     border.color: Theme.cellBorder
     border.width: 2
 
-    layer.enabled: hover.hovered
-    layer.effect: TextLight {
-        source: root
-    }
-
-    HoverHandler {
-        id: hover
-    }
+    property var hover: HoverHandler {}
 }

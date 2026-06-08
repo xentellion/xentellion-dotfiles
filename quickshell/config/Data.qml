@@ -73,4 +73,10 @@ Singleton {
 
     // Brightness icons
     readonly property string brightIcon: ""
+
+    // Media icons
+    readonly property string playerForwardIcon: ""
+    readonly property string playerBackIcon: ""
+    readonly property var playerPauseIcons: ["", ""]
+    readonly property string playerStop: ""
 }
