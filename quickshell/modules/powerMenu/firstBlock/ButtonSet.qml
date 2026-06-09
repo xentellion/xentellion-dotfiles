@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Io
 import Quickshell.Widgets
 
 import "../../../config"
@@ -46,7 +47,26 @@ ColumnLayout {
                 acceptedButtons: Qt.LeftButton
                 onTapped: {
                     updatesTable.isVisible = false;
+                    check.running = true;
                 }
+            }
+
+            TapHandler {
+                acceptedButtons: Qt.RightButton
+                onTapped: {
+                    updatesTable.isVisible = false;
+                    check2.running = true;
+                }
+            }
+
+            Process {
+                id: check
+                command: ["notify-send", "-u", "critical", "Title", "This is an example message"]
+            }
+            Process {
+                id: check2
+
+                command: ["notify-send", "-a", "Telegram", "-i", "telegram", "name", "piss off"]
             }
 
             Component.onCompleted: {

@@ -24,6 +24,8 @@ SideCell {
             delegate: Image {
                 id: sample
                 required property var modelData
+                property bool runAnimation: false
+                property int animDuration: 200
 
                 source: modelData.icon
                 sourceSize.width: 24
@@ -36,6 +38,7 @@ SideCell {
 
                 HoverHandler {
                     id: hover
+                    cursorShape: Qt.PointingHandCursor
                 }
 
                 TapHandler {
@@ -44,6 +47,7 @@ SideCell {
 
                     onTapped: {
                         sample.modelData.activate();
+                        sample.runAnimation = !sample.runAnimation;
                     }
                 }
 
@@ -57,6 +61,23 @@ SideCell {
                 //         }
                 //     }
                 // }
+
+                Behavior on runAnimation {
+                    SequentialAnimation {
+                        NumberAnimation {
+                            target: sample
+                            properties: "scale"
+                            to: 0.6
+                            duration: sample.animDuration / 2
+                        }
+                        NumberAnimation {
+                            target: sample
+                            properties: "scale"
+                            to: 1
+                            duration: sample.animDuration / 2
+                        }
+                    }
+                }
             }
         }
     }

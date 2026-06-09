@@ -10,3 +10,4 @@ TextShadow 1.0 TextShadow.qml
 StyleSlider 1.0 StyleSlider.qml
 WifiObject 1.0 WifiObject.qml
 WiredObject 1.0 WiredObject.qml
+NotificationSlate 1.0 NotificationSlate.qml

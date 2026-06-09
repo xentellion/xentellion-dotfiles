@@ -5,22 +5,12 @@ import Quickshell
 import Quickshell.Services.Notifications
 
 Singleton {
-    id: root
-
-    NotificationServer {
-        id: notify
-
+    property var notify: NotificationServer {
         actionsSupported: true
         bodyHyperlinksSupported: true
         bodyImagesSupported: true
         bodyMarkupSupported: true
         imageSupported: true
         persistenceSupported: true
-
-        onNotification: notification => {
-            notification.tracked = true;
-            console.log("Recieved");
-        // root.notificationReceived(notification);
-        }
     }
 }

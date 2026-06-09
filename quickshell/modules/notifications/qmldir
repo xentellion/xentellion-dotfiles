@@ -1,3 +1,4 @@
 module notifications
 
 NotificationPopUp 1.0 NotificationPopUp.qml
+NotificationPlato 1.0 NotificationPlato.qml

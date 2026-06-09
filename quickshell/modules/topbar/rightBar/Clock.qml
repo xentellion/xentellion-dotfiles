@@ -28,6 +28,7 @@ DefaultCell {
             Behavior on Layout.preferredWidth {
                 NumberAnimation {
                     duration: 200
+                    easing.type: Easing.OutCubic
                 }
             }
         }

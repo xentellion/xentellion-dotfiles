@@ -76,12 +76,7 @@ Scope {
 
                             spacing: root.spacing
                         }
-                        TrayBlock {
-                            id: tray
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: childrenRect.height + root.spacing
-                            spacing: root.spacing
-                        }
+
                         Repeater {
                             id: medias
                             model: Mpris.players
@@ -93,20 +88,33 @@ Scope {
                                 spacing: root.spacing
                             }
                         }
+                        TrayBlock {
+                            id: tray
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: childrenRect.height + root.spacing
+                            spacing: root.spacing
+                        }
                         NotifyBlock {
                             id: notifications
-                            Layout.preferredHeight: {
+                            property int recomendedEmptyHeight: {
+                                let blocks = powermenu.implicitHeight - toplevel.height - tray.height - States.barHeight;
+                                let space = root.spacing * (tray.visible ? 3 : 2);
+                                return blocks - space;
+                            }
+                            property int recomendedFullHeight: Math.floor(powermenu.implicitHeight * 0.5)
+
+                            property int playerCount: {
                                 let counter = 0;
                                 for (let i = 0; i < Mpris.players.values.length; i++) {
                                     if (medias.model.values[i].playbackState !== MprisPlaybackState.Stopped) {
                                         counter++;
                                     }
                                 }
-                                if (counter == 0)
-                                    return Screen.height - notifications.y - States.barHeight - root.spacing * 2;
-                                return Math.floor(Screen.height * 0.75);
+                                return counter;
                             }
-                            Layout.fillWidth: true
+
+                            Layout.preferredHeight: playerCount === 0 ? recomendedEmptyHeight : recomendedFullHeight
+                            spacing: root.spacing
                         }
                     }
                 }

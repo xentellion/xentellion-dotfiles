@@ -13,7 +13,7 @@ SideCell {
     required property int spacing
     required property MprisPlayer modelData
 
-    property int buttonSize: 50
+    property int buttonSize: 40
 
     visible: modelData.playbackState !== MprisPlaybackState.Stopped
 
@@ -47,8 +47,8 @@ SideCell {
                     anchors.fill: parent
                     source: Qt.resolvedUrl(root.modelData.trackArtUrl)
                     fillMode: Image.PreserveAspectCrop
-                    visible: true
                 }
+                visible: root.modelData.trackArtUrl !== ""
             }
         }
 
@@ -141,7 +141,7 @@ SideCell {
             id: commandButtons
             Layout.fillWidth: true
             Layout.preferredHeight: childrenRect.height
-            spacing: root.spacing
+            // spacing: root.spacing
 
             Layout.leftMargin: root.spacing
             Layout.rightMargin: root.spacing

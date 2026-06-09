@@ -1,8 +1,8 @@
 pragma ComponentBehavior: Bound
 
-import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Widgets
 
 import "../../../config"
 

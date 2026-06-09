@@ -10,4 +10,4 @@ singleton NetworkService 1.0 NetworkService.qml
 singleton BluetoothService 1.0 BluetoothService.qml
 singleton UpdatesService 1.0 UpdatesService.qml
 
-singleton NotificationServer 1.0 NotificationServer.qml
+singleton NotificationService 1.0 NotificationService.qml
