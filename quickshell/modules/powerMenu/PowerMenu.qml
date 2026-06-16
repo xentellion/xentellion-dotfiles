@@ -155,23 +155,23 @@ Scope {
 
             HoverHandler {
                 id: hoverHandler
-                // onHoveredChanged: {
-                //     if (hovered) {
-                //         hideTimer.stop();
-                //     } else {
-                //         hideTimer.start();
-                //     }
-                // }
+                onHoveredChanged: {
+                    if (hovered) {
+                        hideTimer.stop();
+                    } else {
+                        hideTimer.start();
+                    }
+                }
             }
 
-            // Timer {
-            //     id: hideTimer
-            //     interval: powermenuBase.sliderDuration
-            //     repeat: false
-            //     onTriggered: {
-            //         States.menuOpen = false;
-            //     }
-            // }
+            Timer {
+                id: hideTimer
+                interval: root.sliderDuration
+                repeat: false
+                onTriggered: {
+                    States.menuOpen = false;
+                }
+            }
         }
     }
 }

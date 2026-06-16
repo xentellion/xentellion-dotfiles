@@ -61,12 +61,11 @@ ColumnLayout {
 
             Process {
                 id: check
-                command: ["notify-send", "-u", "critical", "Title", "This is an example message"]
+                command: ["notify-send", "-u", "critical", "Title", "This is an example message. It is so unbelevably long that it MUST go on another line and i am about copypaste the entire lorem ipsum thing but nah screw it imma do better watch me."]
             }
             Process {
                 id: check2
-
-                command: ["notify-send", "-a", "Telegram", "-i", "telegram", "name", "piss off"]
+                command: ["notify-send", "-a", "telegram", "-i", "telegram", "Name", "vyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекстаvyjujntrcnfмноготекста"]
             }
 
             Component.onCompleted: {

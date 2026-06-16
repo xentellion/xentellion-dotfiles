@@ -26,7 +26,7 @@ SideCell {
 
         RowLayout {
             id: coverArea
-            implicitWidth: parent.width
+            Layout.preferredWidth: parent.width
             Layout.preferredHeight: childrenRect.height
             spacing: root.spacing
 

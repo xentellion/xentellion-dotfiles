@@ -20,25 +20,38 @@ Item {
     property bool active: false
     property bool startVisible: false
 
+    property int currentHeight: messageText.contentHeight
+
     Layout.fillWidth: true
-    implicitHeight: 60
+    Layout.minimumHeight: 60
+    Layout.preferredHeight: currentHeight
+
     rotation: 180
     clip: true
 
-    SideCell {
+    Behavior on currentHeight {
+        NumberAnimation {
+            duration: root.duration
+            easing.type: root.animation
+        }
+    }
+
+    MenuCell {
         id: sample
+        spacing: root.spacing
+        property int currentX: root.active ? 0 : -width
+
         width: parent.width
         height: parent.height
-        radius: Math.floor(root.radius / 2)
-        clip: true
+        radius: root.radius
         visible: root.startVisible
+        clip: true
 
-        x: root.active ? 0 : -width
+        x: currentX
 
-        Behavior on x {
+        Behavior on currentX {
+            id: heightBehavior
             NumberAnimation {
-                target: sample
-                properties: "x"
                 duration: root.duration
                 easing.type: root.animation
             }
@@ -58,29 +71,57 @@ Item {
                 return Theme.cellBorder;
             }
         }
+        border.width: 3
 
         RowLayout {
             anchors.fill: sample
             anchors.margins: root.spacing
             spacing: logo.visible ? root.spacing : 0
 
-            Image {
-                id: logo
+            Item {
                 Layout.fillHeight: true
+
                 Layout.preferredWidth: parent.height
-                fillMode: Image.PreserveAspectFit
-                source: root.modelData.image
+                Layout.maximumWidth: 60
                 visible: root.modelData.image !== ""
+
+                ClippingRectangle {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.top
+                    }
+                    height: parent.width
+                    radius: Math.floor(width / 4)
+                    color: "transparent"
+
+                    Image {
+                        id: logo
+                        anchors.fill: parent
+                        fillMode: Image.PreserveAspectFit
+                        source: root.modelData.image
+
+                        layer.enabled: true
+                        layer.effect: TextShadow {
+                            source: logo
+                        }
+                    }
+                }
             }
 
             ClippingRectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: parent.height
+                Layout.minimumHeight: parent.height
                 color: "transparent"
-                LabelWhite {
+
+                LabelDark {
+                    id: messageText
+                    anchors.fill: parent
                     font.bold: false
                     fontSize: 14
                     text: `<b>${root.modelData.summary}</b><br>${root.modelData.body}`
+                    wrapMode: Text.Wrap
+                    elide: textHover.hovered ? false : Text.ElideRight
                 }
             }
         }
@@ -89,6 +130,10 @@ Item {
             onTapped: {
                 root.deactivate();
             }
+        }
+
+        HoverHandler {
+            id: textHover
         }
     }
 

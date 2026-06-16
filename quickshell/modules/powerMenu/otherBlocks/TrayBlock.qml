@@ -5,7 +5,6 @@ import QtQuick.Layouts
 
 import Quickshell.Services.SystemTray
 
-import "../../../config"
 import "../../../components"
 
 SideCell {
@@ -13,7 +12,6 @@ SideCell {
 
     required property int spacing
 
-    color: Theme.cellColor
     visible: SystemTray.items.values.length > 0
 
     RowLayout {

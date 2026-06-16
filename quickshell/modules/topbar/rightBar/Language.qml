@@ -19,38 +19,46 @@ DefaultCell {
         anchors.centerIn: parent
         spacing: lang.capsVisible ? lang.spacing * 2 : 0
 
-        LabelWhite {
-            id: label
-            text: LayoutService.currentLayout
-            canHover: true
+        Item {
+            Layout.preferredWidth: label.implicitWidth
+            LabelWhite {
+                id: label
+                anchors.centerIn: parent
+                text: LayoutService.currentLayout
+                canHover: true
 
-            TapHandler {
-                onTapped: switchLayoutProcess.running = true
-            }
+                TapHandler {
+                    onTapped: switchLayoutProcess.running = true
+                }
 
-            HoverHandler {
-                id: hoverHandler
-                cursorShape: Qt.PointingHandCursor
-            }
+                HoverHandler {
+                    id: hoverHandler
+                    cursorShape: Qt.PointingHandCursor
+                }
 
-            states: State {
-                name: "mouseIn"
-                when: hoverHandler.hovered == true
-                PropertyChanges {
-                    lang {
-                        color: Theme.cellHighlight
+                states: State {
+                    name: "mouseIn"
+                    when: hoverHandler.hovered == true
+                    PropertyChanges {
+                        lang {
+                            color: Theme.cellHighlight
+                        }
+                    }
+                }
+
+                transitions: Transition {
+                    from: "*"
+                    to: "mouseIn"
+                    reversible: true
+                    ColorAnimation {
+                        target: lang
+                        easing.type: Easing.InOutCubic
                     }
                 }
             }
 
-            transitions: Transition {
-                from: "*"
-                to: "mouseIn"
-                reversible: true
-                ColorAnimation {
-                    target: lang
-                    easing.type: Easing.InOutCubic
-                }
+            Component.onCompleted: {
+                Layout.preferredWidth = Layout.preferredWidth;
             }
         }
 
@@ -68,10 +76,6 @@ DefaultCell {
                 }
             }
         }
-    }
-
-    Component.onCompleted: {
-        Layout.preferredWidth = Layout.preferredWidth;
     }
 
     states: State {
